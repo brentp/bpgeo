@@ -15,6 +15,10 @@ also see:
     http://kellylab.berkeley.edu/blog/?p=169
 """
 
+__author__  = "Brent Pedersen <bpederse@gmail.com"
+__version__ = "0.0.3"
+__license__ = "MIT"
+
 from geopy import geocoders
 import simplejson as SJ
 import sys
