@@ -53,7 +53,7 @@ sudo python2.5 setup.py install
 
 
 cd /opt/src
-svn co https://svn.sourceforge.net/svnroot/matplotlib/trunk matplotlib
+svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk matplotlib
 cd /opt/src/matplotlib/
 # set all *BUILD* = 0 except for BUILD_WXAGG = 'auto'
 # may need to set BUILD_GTK = 0 in multiple places in setup.py
