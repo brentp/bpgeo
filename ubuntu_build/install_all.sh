@@ -22,7 +22,8 @@ wget http://peak.telecommunity.com/dist/ez_setup.py
 sudo python2.5 ez_setup.py
 sudo easy_install-2.5 -UZ http://effbot.org/downloads/Imaging-1.1.6.tar.gz
 
-
+# TODO. make this configurable.
+mkdir /opt/src/
 cd /opt/src/
 svn checkout http://modwsgi.googlecode.com/svn/trunk/ modwsgi
 cd modwsgi
