@@ -1,4 +1,4 @@
-sudo apt-get install  \
+sudo apt-get install vim  \
 gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
 lapack3-dev    \
 refblas3-dev tcl8.4-dev tk8.4-dev  \
