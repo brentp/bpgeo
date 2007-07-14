@@ -1,3 +1,5 @@
+sudo apt-get update 
+sudo apt-get upgrade
 sudo apt-get install vim  \
 gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
 lapack3-dev libgd2-noxpm-dev   \
