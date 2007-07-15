@@ -77,7 +77,6 @@ var WMSLayer = function(){
         else {
             var url = this.url + 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
                             + '&SRS=EPSG:4326';
-            console.log(url);                  
             return url;
         }
         

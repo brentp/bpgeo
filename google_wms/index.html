@@ -7,7 +7,7 @@
     <script
     src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAyTERmRqYwOf1Ee4AOegF9xRetjBGwIc4P8WeP1_N5D3zVtRAghTq2bWtMtKxZqoMqxbAgmbuen4Nmw"
       type="text/javascript"></script>
-    <script type="text/javascript" src="google-wms-0.1.js"></script>
+    <script type="text/javascript" src="google-wms.js"></script>
     <script type="text/javascript">
 
     //<![CDATA[
@@ -20,7 +20,7 @@
                     ,{LAYERS:'global_mosaic'}
         );
 
-        var layer=[ myTileLayer];
+        var layer=[ myTileLayer, G_HYBRID_LAYER.getTileLayers()[1]];
         var mymaptype = new GMapType(layer, G_NORMAL_MAP.getProjection(), "Contour");
         map.getMapTypes().length = 0
         map.addMapType(mymaptype);
