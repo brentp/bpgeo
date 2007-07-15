@@ -13,11 +13,12 @@
     function load() {
         map = new GMap2(document.getElementById("map"));
 
-        var myTileLayer= new
-        WMSLayer('http://localhost/cgi-bin/mapserv?map=/Library/WebServer/Documents/EIMS/cont.map&'
-        ,{LAYERS:'contour'});
+        var myTileLayer= new WMSLayer(
+                    'http://wms.jpl.nasa.gov/wms.cgi?'
+                    ,{LAYERS:'global_mosaic'}
+        );
 
-        var layer=[ G_NORMAL_MAP.getTileLayers()[0], myTileLayer];
+        var layer=[ myTileLayer];
         var mymaptype = new GMapType(layer, G_NORMAL_MAP.getProjection(), "Contour");
         map.getMapTypes().length = 0
         map.addMapType(mymaptype);

@@ -47,12 +47,13 @@ var WMSLayer = function(){
 
     var _wmslayer = function(url,options){
         if(! options){ options = {}}
-        this.url = url.indexOf('?') != -1 && url || url + '?';
+        this.url = url.indexOf('?') != -1 && url + '&' || url + '?';
         for(var key in DEFAULTS){
-            this.url += '&' +  key + '=' 
-                + (options[key] || DEFAULTS[key]);
+            this.url += key + '=' 
+                + (options[key] || DEFAULTS[key]) + '&';
         }
-        console.log(this.url);
+        // NASA doesn't like this...
+        this.url = this.url.replace('?&','?');
         // NOTE: set USE_MERCATOR = true; after constructor call as desired.
         this.USE_MERCATOR = false;
     }
@@ -66,7 +67,7 @@ var WMSLayer = function(){
         var lUL = G_NORMAL_MAP.getProjection().fromPixelToLatLng(lULP,b,c);
         var lLR = G_NORMAL_MAP.getProjection().fromPixelToLatLng(lLRP,b,c);    
         if(this.USE_MERCATOR){
-            return this.url + '&BBOX=' 
+            return this.url + 'BBOX=' 
                             + dd2MercMetersLng(lUL.x) + "," 
                             + dd2MercMetersLat(lUL.y) + ","
                             + dd2MercMetersLng(lLR.x) + "," 
@@ -74,9 +75,10 @@ var WMSLayer = function(){
                             + '&SRS=EPSG:41001'  
         }
         else {
-            console.log(this.url);
-            return this.url + '&BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
-                            + '&SRS=EPSG:4326'
+            var url = this.url + 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
+                            + '&SRS=EPSG:4326';
+            console.log(url);                  
+            return url;
         }
         
     };
