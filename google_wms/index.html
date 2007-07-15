@@ -20,7 +20,7 @@
                     ,{LAYERS:'global_mosaic'}
         );
 
-        var layer=[ myTileLayer, G_HYBRID_LAYER.getTileLayers()[1]];
+        var layer=[ myTileLayer, G_HYBRID_MAP.getTileLayers()[1]];
         var mymaptype = new GMapType(layer, G_NORMAL_MAP.getProjection(), "Contour");
         map.getMapTypes().length = 0
         map.addMapType(mymaptype);
