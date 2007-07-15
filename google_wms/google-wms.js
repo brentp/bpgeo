@@ -48,6 +48,7 @@ var WMSLayer = function(){
     var _wmslayer = function(url,options){
         if(! options){ options = {}}
         this.url = url.indexOf('?') != -1 && url + '&' || url + '?';
+        this.options = options;
         for(var key in DEFAULTS){
             this.url += key + '=' 
                 + (options[key] || DEFAULTS[key]) + '&';
@@ -67,7 +68,7 @@ var WMSLayer = function(){
         var lUL = G_NORMAL_MAP.getProjection().fromPixelToLatLng(lULP,b,c);
         var lLR = G_NORMAL_MAP.getProjection().fromPixelToLatLng(lLRP,b,c);    
         if(this.USE_MERCATOR){
-            return this.url + 'BBOX=' 
+            var url = this.url + 'BBOX=' 
                             + dd2MercMetersLng(lUL.x) + "," 
                             + dd2MercMetersLat(lUL.y) + ","
                             + dd2MercMetersLng(lLR.x) + "," 
@@ -77,8 +78,9 @@ var WMSLayer = function(){
         else {
             var url = this.url + 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
                             + '&SRS=EPSG:4326';
-            return url;
         }
+        if(this.options.NO_CACHE){ url +='&r=' + (new Date()).getTime(); }
+        return url;
         
     };
     _wmslayer.prototype.getOpacity = function(){
