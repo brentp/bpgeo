@@ -1,0 +1,19 @@
+see Shapely. a python library to access geos functions to to
+relational stuff with shapes (lines, points, polygons):
+
+http://trac.gispython.org/projects/PCL/wiki/ShapeLy
+
+this is just a silly afternoon project to make the functions available
+in sqlite so you can do things like:
+
+SELECT INTERSECTION('POLYGON((1.34 .....))', 'POLYGON((12.23 .....))
+just as you would in postGIS.
+
+however, the shapely directly provides these in a nicer syntax:
+
+a.instersection(b)
+a.union(b)
+a.difference(b)
+
+etc.
+
