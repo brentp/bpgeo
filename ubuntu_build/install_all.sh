@@ -16,7 +16,7 @@ blitz++ proj imagemagick \
 curl libcurl3-dev libtiff4-dev liblzo2-dev \
 php5-dev byacc libiconv-hook-dev flex recode \
 firefox libxbase2.0-dev python-setuptools libfreetype6-dev \
-subversion apache2-utils wget \
+subversion apache2-utils wget libreadline5-dev \
 byacc bison rsnapshot postgresql-contrib-8.2 postgresql-server-dev-8.2
 
 
