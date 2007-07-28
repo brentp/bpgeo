@@ -50,7 +50,10 @@ wget http://download.osgeo.org/gdal/gdal-1.4.2.tar.gz
 echo "BUILD GDAL"
 # TODO. add my default config stuff.
 
+#######################################################
 # GRASS: http://grass.itc.it/download/index.php
+#  http://trac.osgeo.org/gdal/wiki/GRASS
+#######################################################
 #TODO build postgis/postgresql
 
 svn checkout http://svn.refractions.net/postgis/trunk postgis-svn
