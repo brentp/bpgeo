@@ -35,12 +35,22 @@ sudo make install
 # need to do some other config for modwsgi, see the _very_ good docs 
 # on it's google project page. 
 
+cd ${SRCDIR}
+mkdir geos
+cd geos
+wget http://geos.refractions.net/geos-3.0.0rc4.tar.bz2
+tar xvf geos-3.0.0rc4.tar.bz2
+cd geos-3.0.0
+./configure;make; 
+sudo make install
+
 mkdir ${SRCDIR}/gdal
 cd ${SRCDIR}/gdal
 wget http://download.osgeo.org/gdal/gdal-1.4.2.tar.gz
 echo "BUILD GDAL"
 # TODO. add my default config stuff.
 
+# GRASS: http://grass.itc.it/download/index.php
 #TODO build postgis/postgresql
 
 svn checkout http://svn.refractions.net/postgis/trunk postgis-svn
@@ -60,15 +70,6 @@ cd ${SRCDIR}
 svn co http://svn.scipy.org/svn/numpy/trunk numpy
 cd ${SRCDIR}/numpy/numpy
 sudo python2.5 setup.py install
-
-cd ${SRCDIR}
-mkdir geos
-cd geos
-wget http://geos.refractions.net/geos-3.0.0rc4.tar.bz2
-tar xvf geos-3.0.0rc4.tar.bz2
-cd geos-3.0.0
-./configure;make; 
-sudo make install
 
 cd ${SRCDIR}
 svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/matplotlib/ matplotlib
