@@ -11,13 +11,13 @@ libatlas-cpp-0.6-dev \
 fftw3-dev libumfpack4-dev \
 swig libgeos-dev sqlite3 \
 libpng12-dev libpq-dev libgl1-mesa-dev libglu1-mesa-dev \
-libboost-dev \
+libboost-dev openssh-server \
 blitz++ proj imagemagick \
 curl libcurl3-dev libtiff4-dev liblzo2-dev \
 php5-dev byacc libiconv-hook-dev flex recode \
 firefox libxbase2.0-dev python-setuptools libfreetype6-dev \
 subversion apache2-utils wget \
-byacc postgis rsnapshot
+byacc bison rsnapshot postgresql-contrib-8.2 postgresql-server-dev-8.2
 
 
 # try to move to 2.5
@@ -43,6 +43,12 @@ echo "BUILD GDAL"
 
 #TODO build postgis/postgresql
 
+svn checkout http://svn.refractions.net/postgis/trunk postgis-svn
+cd postgis-svn
+ LDFLAGS=-lstdc++ ./configure
+make
+sudo make install
+
 
 cd ${SRCDIR}/
 svn co https://svn.osgeo.org/mapserver/trunk/mapserver mapserver
@@ -57,10 +63,10 @@ sudo python2.5 setup.py install
 
 cd ${SRCDIR}
 mkdir geos
-wget http://geos.refractions.net/geos-3.0.0rc4.tar.bz2
 cd geos
+wget http://geos.refractions.net/geos-3.0.0rc4.tar.bz2
 tar xvf geos-3.0.0rc4.tar.bz2
-cd geos-3.0.0rc4
+cd geos-3.0.0
 ./configure;make; 
 sudo make install
 
