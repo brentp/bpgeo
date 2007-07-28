@@ -41,6 +41,8 @@ wget http://download.osgeo.org/gdal/gdal-1.4.2.tar.gz
 echo "BUILD GDAL"
 # TODO. add my default config stuff.
 
+#TODO build postgis/postgresql
+
 
 cd ${SRCDIR}/
 svn co https://svn.osgeo.org/mapserver/trunk/mapserver mapserver
@@ -48,11 +50,19 @@ cd mapserver
 echo "BUILD MAPSERVER"
 # TODO. add my default config stuff.
 
-cd ${SRCDIR}/
+cd ${SRCDIR}
 svn co http://svn.scipy.org/svn/numpy/trunk numpy
 cd ${SRCDIR}/numpy/numpy
 sudo python2.5 setup.py install
 
+cd ${SRCDIR}
+mkdir geos
+wget http://geos.refractions.net/geos-3.0.0rc4.tar.bz2
+cd geos
+tar xvf geos-3.0.0rc4.tar.bz2
+cd geos-3.0.0rc4
+./configure;make; 
+sudo make install
 
 cd ${SRCDIR}
 svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/matplotlib/ matplotlib
@@ -73,6 +83,10 @@ cd ${SRCDIR}/ipython/
 sudo python2.5 setup.py install
 
 cd ${SRCDIR}
+svn co http://code.djangoproject.com/svn/django/branches/gis geodjango
+cd geodjango
+sudo python2.5 setup.py install
+
 #### JAVA
 #wget http://www.iki.fi/kuparine/comp/ubuntu/install.sh
 #sh install.sh
