@@ -3,7 +3,7 @@ sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install vim  \
 gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
-lapack3-dev libgd2-noxpm-dev   \
+lapack3-dev  libgd2-xpm-dev   \
 refblas3-dev tcl8.4-dev tk8.4-dev  \
 scalapack-lam-dev \
 atlas3-base-dev \
@@ -11,12 +11,12 @@ libatlas-cpp-0.6-dev \
 fftw3-dev libumfpack4-dev \
 swig libgeos-dev sqlite3 \
 libpng12-dev libpq-dev libgl1-mesa-dev libglu1-mesa-dev \
-libboost-dev openssh-server \
-blitz++ proj imagemagick \
+libboost-dev openssh-server  ssh-askpass \
+blitz++ proj imagemagick libagg-dev \
 curl libcurl3-dev libtiff4-dev liblzo2-dev \
 php5-dev byacc libiconv-hook-dev flex recode \
 firefox libxbase2.0-dev python-setuptools libfreetype6-dev \
-subversion apache2-utils wget libreadline5-dev \
+subversion apache2-utils apache2-threaded-dev apache2 wget libreadline5-dev \
 byacc bison rsnapshot postgresql-contrib-8.2 postgresql-server-dev-8.2
 
 
@@ -32,6 +32,10 @@ cd modwsgi
 ./configure
 make
 sudo make install
+# then put:
+# LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so
+# at the end of /etc/apache2/apache2.conf
+
 # need to do some other config for modwsgi, see the _very_ good docs 
 # on it's google project page. 
 
@@ -47,8 +51,11 @@ sudo make install
 mkdir ${SRCDIR}/gdal
 cd ${SRCDIR}/gdal
 wget http://download.osgeo.org/gdal/gdal-1.4.2.tar.gz
-echo "BUILD GDAL"
-# TODO. add my default config stuff.
+tar zxvf gdal-1.4.2.tar.gz
+cd gdal-1.4.2
+./configure --without-python --with-sqlite=/usr/include
+make -j2
+sudo make install
 
 #######################################################
 # GRASS: http://grass.itc.it/download/index.php
@@ -56,6 +63,7 @@ echo "BUILD GDAL"
 #######################################################
 #TODO build postgis/postgresql
 
+cd ${SRCDIR}
 svn checkout http://svn.refractions.net/postgis/trunk postgis-svn
 cd postgis-svn
  LDFLAGS=-lstdc++ ./configure
@@ -63,11 +71,22 @@ make
 sudo make install
 
 
-cd ${SRCDIR}/
+cd ${SRCDIR}
 svn co https://svn.osgeo.org/mapserver/trunk/mapserver mapserver
 cd mapserver
-echo "BUILD MAPSERVER"
-# TODO. add my default config stuff.
+./configure \
+--with-postgis=/usr/bin/pg_config \
+--with-gdal=/usr/local/bin/gdal-config \
+--with-ogr=/usr/local/bin/gdal-config \
+--with-wmsclient --with-wfs \
+--with-geos=/usr/bin/geos-config \
+--with-proj \
+--with-httpd=/usr/sbin/apache2 \
+--with-agg=/usr \
+--with-gd=/usr \
+make
+sudo mkdir /usr/lib/cgi-bin/
+sudo cp mapserv /usr/lib/cgi-bin/
 
 cd ${SRCDIR}
 svn co http://svn.scipy.org/svn/numpy/trunk numpy
