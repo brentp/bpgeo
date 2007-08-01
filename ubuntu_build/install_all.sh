@@ -102,7 +102,7 @@ cd mapserver
 --with-proj \
 --with-httpd=/usr/sbin/apache2 \
 --with-agg=/usr \
---with-gd=/usr \
+--with-gd=/usr 
 make
 sudo mkdir /usr/lib/cgi-bin/
 sudo cp mapserv /usr/lib/cgi-bin/
