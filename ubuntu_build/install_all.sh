@@ -137,6 +137,8 @@ svn co http://code.djangoproject.com/svn/django/branches/gis geodjango
 cd geodjango
 sudo python2.5 setup.py install
 
+sudo easy_install-2.5 -UZ psycopg2
+
 #### JAVA
 #wget http://www.iki.fi/kuparine/comp/ubuntu/install.sh
 #sh install.sh
