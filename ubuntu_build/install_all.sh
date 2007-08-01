@@ -87,7 +87,8 @@ sudo make install
 cd ${SRCDIR}
 svn checkout http://svn.refractions.net/postgis/trunk postgis-svn
 cd postgis-svn
- LDFLAGS=-lstdc++ ./configure
+# these LDFLAGS, prefix seem necessary
+LDFLAGS=-lstdc++ ./configure --prefix=/usr/local
 make
 sudo make install
 
