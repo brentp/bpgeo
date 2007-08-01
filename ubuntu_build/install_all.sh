@@ -57,6 +57,8 @@ cd gdal-1.4.2
 make -j2
 sudo make install
 
+# TODO fix this...
+sudo ln -s /usr/local/lib/*.so* /usr/lib/
 #######################################################
 # GRASS: http://grass.itc.it/download/index.php
 #  http://trac.osgeo.org/gdal/wiki/GRASS
