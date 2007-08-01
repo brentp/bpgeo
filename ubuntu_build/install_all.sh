@@ -61,9 +61,9 @@ sudo make install
 # GRASS: http://grass.itc.it/download/index.php
 #  http://trac.osgeo.org/gdal/wiki/GRASS
 #######################################################
-cd $(SRCDIR}
+cd ${SRCDIR}
 export CVSROOT=:pserver:grass-guest@intevation.de:/home/grass/grassrepository
-echo "password is 'grass6'
+echo "password is 'grass'"
 cvs login
 cvs -z3 co grass6
 cd grass6
@@ -109,7 +109,7 @@ sudo cp mapserv /usr/lib/cgi-bin/
 
 cd ${SRCDIR}
 svn co http://svn.scipy.org/svn/numpy/trunk numpy
-cd ${SRCDIR}/numpy/numpy
+cd ${SRCDIR}/numpy
 sudo python2.5 setup.py install
 
 cd ${SRCDIR}
