@@ -9,7 +9,7 @@ scalapack-lam-dev \
 atlas3-base-dev \
 libatlas-cpp-0.6-dev \
 fftw3-dev libumfpack4-dev \
-swig libgeos-dev sqlite3 \
+swig libgeos-dev sqlite3 cvs \
 libpng12-dev libpq-dev libgl1-mesa-dev libglu1-mesa-dev \
 libboost-dev openssh-server  ssh-askpass \
 blitz++ proj imagemagick libagg-dev \
@@ -61,7 +61,26 @@ sudo make install
 # GRASS: http://grass.itc.it/download/index.php
 #  http://trac.osgeo.org/gdal/wiki/GRASS
 #######################################################
-#TODO build postgis/postgresql
+cd $(SRCDIR}
+export CVSROOT=:pserver:grass-guest@intevation.de:/home/grass/grassrepository
+echo "password is 'grass6'
+cvs login
+cvs -z3 co grass6
+cd grass6
+cvs up -dP
+./configure --with-cxx --with-sqlite \
+--with-postgres-libs=/usr/include/postgresql/libpq/ \
+--with-postgres-includes=/usr/include/postgresql/ \
+--with-freetype --with-freetype-includes=/usr/include/freetype2 \
+--with-proj-share=/usr/share/proj \
+--with-gdal=/usr/local/bin/gdal-config \
+--with-blas --with-lapack --with-python \
+--with-tcltk-includes=/usr/include/tcl8.4 \
+--with-readline 
+make
+cd raster; make; cd ..; cd vector; make; cd ..; cd misc; make; cd ..; cd display; make; cd ..; cd general; make; cd ..; cd imagery; make; cd ..; cd db; make; cd ..; cd ps; make; cd ..; cd gui; make; cd ..; cd visualization; make; cd ..; cd scripts; make; cd ..; cd tools; make; cd ..; cd gem; make; cd ..; cd sites; make; cd ..; 
+sudo make install
+
 
 cd ${SRCDIR}
 svn checkout http://svn.refractions.net/postgis/trunk postgis-svn
