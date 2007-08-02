@@ -12,7 +12,7 @@ fftw3-dev libumfpack4-dev \
 swig libgeos-dev sqlite3 cvs \
 libpng12-dev libpq-dev libgl1-mesa-dev libglu1-mesa-dev \
 libboost-dev openssh-server  ssh-askpass \
-blitz++ proj imagemagick libagg-dev \
+blitz++ proj imagemagick libagg-dev keychain \
 curl libcurl3-dev libtiff4-dev liblzo2-dev \
 php5-dev byacc libiconv-hook-dev flex recode \
 firefox libxbase2.0-dev python-setuptools libfreetype6-dev \
