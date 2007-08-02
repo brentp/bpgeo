@@ -32,12 +32,8 @@ cd modwsgi
 ./configure
 make
 sudo make install
-# then put:
-# LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so
-# at the end of /etc/apache2/apache2.conf
-
-# need to do some other config for modwsgi, see the _very_ good docs 
-# on it's google project page. 
+#echo 'LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so' >> /etc/apache2/apache2.conf
+# see the _very_ good docs for modwsgi on it's google project page. 
 
 cd ${SRCDIR}
 mkdir geos
