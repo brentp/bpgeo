@@ -67,8 +67,9 @@ var WMSLayer = function(){
         var lLRP = new GPoint((a.x+1)*256,a.y*256);
         var lUL = G_NORMAL_MAP.getProjection().fromPixelToLatLng(lULP,b,c);
         var lLR = G_NORMAL_MAP.getProjection().fromPixelToLatLng(lLRP,b,c);    
+        var url;
         if(this.USE_MERCATOR){
-            var url = this.url + 'BBOX=' 
+            url = this.url + 'BBOX=' 
                             + dd2MercMetersLng(lUL.x) + "," 
                             + dd2MercMetersLat(lUL.y) + ","
                             + dd2MercMetersLng(lLR.x) + "," 
@@ -76,7 +77,7 @@ var WMSLayer = function(){
                             + '&SRS=EPSG:41001'  
         }
         else {
-            var url = this.url + 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
+            url = this.url + 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
                             + '&SRS=EPSG:4326';
         }
         if(this.options.NO_CACHE){ url +='&r=' + (new Date()).getTime(); }
@@ -89,3 +90,30 @@ var WMSLayer = function(){
     return _wmslayer;
 
 }();
+
+/* take an x and y and the wmslayer and do a get featureinfo requests.  */
+
+GMap2.prototype.getFeatureInfo = function(imgx,imgy,wmslayer){
+    var bds = this.getBounds().toString();
+    bds = bds.replace(/[\)\(\s]/g,'').split(",");
+    bds = [bds[1], bds[0], bds[3], bds[2]].join(",");
+    var url = wmslayer.url;
+    url = url.replace('GetMap','GetFeatureInfo')
+             .replace('WIDTH=256', 'WIDTH=' + this.getSize().width)
+             .replace('HEIGHT=256', 'HEIGHT=' + this.getSize().height)
+             + '&X=' + imgx
+             + '&Y=' + imgy
+             + '&SRS=EPSG:' + (wmslayer.USE_MERCATOR ? '41001' : '4326')
+             + '&BBOX=' + bds
+            // + '&INFO_FORMAT=text/html';
+
+    console.log(bds,url.replace(/&/g,'\n'));
+    var ma = url.match(/(&LAYERS=[^&]+)/)[0];
+    url += ma.replace('&LAYERS','&QUERY_LAYERS');
+
+    GDownloadUrl(url,function(res){
+        console.log(res);
+    });
+
+};
+
