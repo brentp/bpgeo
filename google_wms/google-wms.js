@@ -91,7 +91,7 @@ var WMSLayer = function(){
 
 }();
 
-/* take an x and y and the wmslayer and do a get featureinfo requests.  */
+
 GMap2.prototype.fromLatLngToPixel = function(ll){
     var cornerll = map.fromContainerPixelToLatLng(new GPoint(0,0),true);
     var cornerxy = this.fromLatLngToDivPixel(cornerll);
@@ -102,6 +102,7 @@ GMap2.prototype.fromLatLngToPixel = function(ll){
     return imgxy;
 }
 
+/* take an x and y and the wmslayer and do a get featureinfo requests.  */
 GMap2.prototype.getFeatureInfo = function(pt,wmslayer){
     var tpt = pt;
     var imgxy = this.fromLatLngToPixel(tpt);
@@ -122,13 +123,10 @@ GMap2.prototype.getFeatureInfo = function(pt,wmslayer){
     url += ma.replace('&LAYERS','&QUERY_LAYERS');
 
     var self = this;
-    console.log(url.split('&').join('\n'));
-    $.get(url,function(data){
+    GDownloadUrl(url,function(data){
         self.closeInfoWindow()
         if(!data){ return false;}
-        console.log(data);
         self.openInfoWindowHtml(tpt, data);
     });
 
 };
-
