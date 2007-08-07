@@ -92,8 +92,19 @@ var WMSLayer = function(){
 }();
 
 /* take an x and y and the wmslayer and do a get featureinfo requests.  */
+GMap2.prototype.fromLatLngToPixel = function(ll){
+    var cornerll = map.fromContainerPixelToLatLng(new GPoint(0,0),true);
+    var cornerxy = this.fromLatLngToDivPixel(cornerll);
 
-GMap2.prototype.getFeatureInfo = function(imgx,imgy,wmslayer){
+    var imgxy = this.fromLatLngToDivPixel(ll);
+    imgxy.x -= cornerxy.x;
+    imgxy.y -= cornerxy.y;
+    return imgxy;
+}
+
+GMap2.prototype.getFeatureInfo = function(pt,wmslayer){
+    var tpt = pt;
+    var imgxy = this.fromLatLngToPixel(tpt);
     var bds = this.getBounds().toString();
     bds = bds.replace(/[\)\(\s]/g,'').split(",");
     bds = [bds[1], bds[0], bds[3], bds[2]].join(",");
@@ -101,18 +112,22 @@ GMap2.prototype.getFeatureInfo = function(imgx,imgy,wmslayer){
     url = url.replace('GetMap','GetFeatureInfo')
              .replace('WIDTH=256', 'WIDTH=' + this.getSize().width)
              .replace('HEIGHT=256', 'HEIGHT=' + this.getSize().height)
-             + '&X=' + imgx
-             + '&Y=' + imgy
+             + '&X=' + imgxy.x
+             + '&Y=' + imgxy.y
              + '&SRS=EPSG:' + (wmslayer.USE_MERCATOR ? '41001' : '4326')
              + '&BBOX=' + bds
-            // + '&INFO_FORMAT=text/html';
+             + '&INFO_FORMAT=text/html';
 
-    console.log(bds,url.replace(/&/g,'\n'));
     var ma = url.match(/(&LAYERS=[^&]+)/)[0];
     url += ma.replace('&LAYERS','&QUERY_LAYERS');
 
-    GDownloadUrl(url,function(res){
-        console.log(res);
+    var self = this;
+    console.log(url.split('&').join('\n'));
+    $.get(url,function(data){
+        self.closeInfoWindow()
+        if(!data){ return false;}
+        console.log(data);
+        self.openInfoWindowHtml(tpt, data);
     });
 
 };
