@@ -101,7 +101,8 @@ cd mapserver
 --with-proj \
 --with-httpd=/usr/sbin/apache2 \
 --with-agg=/usr \
---with-gd=/usr 
+--with-gd=/usr  \
+--with-freetype=/usr/bin/freetype-config
 make
 sudo mkdir /usr/lib/cgi-bin/
 sudo cp mapserv /usr/lib/cgi-bin/
