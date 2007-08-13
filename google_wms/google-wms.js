@@ -104,6 +104,7 @@ GMap2.prototype.fromLatLngToPixel = function(ll){
 
 /* take an x and y and the wmslayer and do a get featureinfo requests.  */
 GMap2.prototype.getFeatureInfo = function(pt,wmslayer){
+    if(!pt){ return false; }
     var tpt = pt;
     var imgxy = this.fromLatLngToPixel(tpt);
     var bds = this.getBounds().toString();
