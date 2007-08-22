@@ -9,7 +9,7 @@ scalapack-lam-dev \
 atlas3-base-dev \
 libatlas-cpp-0.6-dev \
 fftw3-dev libumfpack4-dev \
-swig libgeos-dev sqlite3 cvs \
+swig sqlite3 cvs \
 libpng12-dev libpq-dev libgl1-mesa-dev libglu1-mesa-dev \
 libboost-dev openssh-server  ssh-askpass \
 blitz++ proj imagemagick libagg-dev keychain \
@@ -44,6 +44,9 @@ cd geos-3.0.0
 ./configure;make; 
 sudo make install
 
+sudo echo "/usr/local/lib" >> /etc/ld.so.conf
+sudo ldconfig
+
 mkdir ${SRCDIR}/gdal
 cd ${SRCDIR}/gdal
 wget http://download.osgeo.org/gdal/gdal-1.4.2.tar.gz
@@ -53,8 +56,7 @@ cd gdal-1.4.2
 make -j2
 sudo make install
 
-# TODO fix this...
-sudo ln -s /usr/local/lib/*.so* /usr/lib/
+sudo ldconfig
 #######################################################
 # GRASS: http://grass.itc.it/download/index.php
 #  http://trac.osgeo.org/gdal/wiki/GRASS
