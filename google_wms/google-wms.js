@@ -39,7 +39,7 @@ var WMSLayer = function(){
 
     function dd2MercMetersLat(p_lat) {
         var lat_rad = p_lat * DEG2RAD;
-        return WGS84_SEMI_MAJOR_AXIS * Math.log(Math.tan((lat_rad + PI / 2) / 2) 
+        return WGS84_SEMI_MAJOR_AXIS * Math.log(Math.tan((lat_rad + Math.PI / 2) / 2) 
                 * Math.pow( ((1 - WGS84_ECCENTRICITY * Math.sin(lat_rad)) 
                 / (1 + WGS84_ECCENTRICITY * Math.sin(lat_rad)))
                 , (WGS84_ECCENTRICITY/2)));
