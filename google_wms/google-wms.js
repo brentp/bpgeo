@@ -56,7 +56,7 @@ var WMSLayer = function(){
         // NASA doesn't like this...
         this.url = this.url.replace('?&','?');
         // NOTE: set USE_MERCATOR = true; after constructor call as desired.
-        this.USE_MERCATOR = false;
+        this.USE_MERCATOR = 0;
     }
 
     // inherit from the tile layer.
@@ -74,7 +74,7 @@ var WMSLayer = function(){
                             + dd2MercMetersLat(lUL.y) + ","
                             + dd2MercMetersLng(lLR.x) + "," 
                             + dd2MercMetersLat(lLR.y) 
-                            + '&SRS=EPSG:41001'  
+                            + '&SRS=EPSG:900913'  
         }
         else {
             url = this.url + 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
