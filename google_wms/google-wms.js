@@ -74,7 +74,7 @@ var WMSLayer = function(){
                             + dd2MercMetersLat(lUL.y) + ","
                             + dd2MercMetersLng(lLR.x) + "," 
                             + dd2MercMetersLat(lLR.y) 
-                            + '&SRS=EPSG:900913'  
+                            + '&SRS=EPSG:54004'  
         }
         else {
             url = this.url + 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
