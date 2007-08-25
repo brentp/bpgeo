@@ -15,33 +15,36 @@ CHANGES from wms236.js:
 */
 
 var WMSLayer = function(){
-    var MAGIC_NUMBER = 6356752.3142; 
+    var MAGIC_NUMBER          = 6356752.3142; 
     var WGS84_SEMI_MAJOR_AXIS = 6378137.0;
-    var WGS84_ECCENTRICITY = 0.0818191913108718138;
-    var DEG2RAD = Math.PI/180;
-    var MERC_ZOOM_DEFAULT = 15;
+    var WGS84_ECCENTRICITY    = 0.0818191913108718138;
+    var DEG2RAD               = Math.PI/180;
+
     var DEFAULTS = {
-         FORMAT       : 'image/png'
-        ,VERSION      : '1.1.1'
-        ,STYLES       : ''
-        ,REQUEST      : 'GetMap'
-        ,SERVICE      : 'WMS'
-        ,TRANSPARENT  : 'TRUE'
-        ,WIDTH        : 256
+         LAYERS       : ''
+        ,FORMAT       : 'image/png'
         ,HEIGHT       : 256
         ,REASPECT     : 'FALSE'
-        ,LAYERS       : ''
+        ,REQUEST      : 'GetMap'
+        ,STYLES       : ''
+        ,SERVICE      : 'WMS'
+        ,TRANSPARENT  : 'TRUE'
+        ,VERSION      : '1.1.1'
+        ,WIDTH        : 256
     };
 
-    function dd2MercMetersLng(p_lng) {
-        return WGS84_SEMI_MAJOR_AXIS * (p_lng*DEG2RAD);
+    var WGS84_DEG2RAD = WGS84_SEMI_MAJOR_AXIS * DEG2RAD; 
+    function DD2MetersLng(p_lng) {
+        return WGS84_DEG2RAD * p_lng;
     }
 
-    function dd2MercMetersLat(p_lat) {
+    PI2 = Math.PI / 2;
+    function DD2MetersLat(p_lat) {
         var lat_rad = p_lat * DEG2RAD;
-        return WGS84_SEMI_MAJOR_AXIS * Math.log(Math.tan((lat_rad + Math.PI / 2) / 2) 
-                * Math.pow( ((1 - WGS84_ECCENTRICITY * Math.sin(lat_rad)) 
-                / (1 + WGS84_ECCENTRICITY * Math.sin(lat_rad)))
+        var WGS84_SIN_LAT_RAD = WGS84_ECCENTRICITY * Math.sin(lat_rad);
+        return WGS84_SEMI_MAJOR_AXIS * Math.log(Math.tan((lat_rad + PI2) / 2) 
+                * Math.pow( ((1 - WGS84_SIN_LAT_RAD) 
+                / (1 + WGS84_SIN_LAT_RAD))
                 , (WGS84_ECCENTRICITY/2)));
     }
 
@@ -61,24 +64,25 @@ var WMSLayer = function(){
 
     // inherit from the tile layer.
     var tl = new GTileLayer(new GCopyrightCollection(""), 1, 17);
+    var proj = G_NORMAL_MAP.getProjection();
     _wmslayer.prototype = tl;
     _wmslayer.prototype.getTileUrl = function(a, b, c){
         var lULP = new GPoint(a.x*256,(a.y+1)*256);
         var lLRP = new GPoint((a.x+1)*256,a.y*256);
-        var lUL = G_NORMAL_MAP.getProjection().fromPixelToLatLng(lULP,b,c);
-        var lLR = G_NORMAL_MAP.getProjection().fromPixelToLatLng(lLRP,b,c);    
+        var lUL = proj.fromPixelToLatLng(lULP,b,c);
+        var lLR = proj.fromPixelToLatLng(lLRP,b,c);    
         var url;
         if(this.USE_MERCATOR){
             url = this.url + 'BBOX=' 
-                            + dd2MercMetersLng(lUL.x) + "," 
-                            + dd2MercMetersLat(lUL.y) + ","
-                            + dd2MercMetersLng(lLR.x) + "," 
-                            + dd2MercMetersLat(lLR.y) 
-                            + '&SRS=EPSG:54004'  
+                           + DD2MetersLng(lUL.x) + "," 
+                           + DD2MetersLat(lUL.y) + ","
+                           + DD2MetersLng(lLR.x) + "," 
+                           + DD2MetersLat(lLR.y) 
+                           + '&SRS=EPSG:54004';
         }
         else {
             url = this.url + 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
-                            + '&SRS=EPSG:4326';
+                           + '&SRS=EPSG:4326';
         }
         if(this.options.NO_CACHE){ url +='&r=' + (new Date()).getTime(); }
         return url;
