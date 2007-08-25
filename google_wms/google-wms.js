@@ -87,7 +87,6 @@ GWMS.Layer = function(){
         }
 
         if(this.options.NO_CACHE){ url +='&r=' + (new Date()).getTime(); }
-        console.log(url);
         return url;
         
     };
