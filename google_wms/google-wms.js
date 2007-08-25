@@ -51,7 +51,6 @@ GWMS.Layer = function(){
 
     var _wmslayer = function(url,options){
         if(! options){ options = {}}
-        // _wmslayer.prototype = GTileLayer.prototype;
         this.url = url.indexOf('?') != -1 && url + '&' || url + '?';
         this.options = options;
         for(var key in DEFAULTS){
@@ -66,8 +65,8 @@ GWMS.Layer = function(){
 
     // inherit from the tile layer.
     var proj = G_NORMAL_MAP.getProjection();
-    _wmslayer.prototype = new GTileLayer(new GCopyrightCollection(""), 1, 17);
-    _wmslayer.prototype = GTileLayer.prototype;
+    _wmslayer.prototype = new GTileLayer(new GCopyrightCollection(""), 1, 19);
+//    _wmslayer.prototype = GTileLayer.prototype;
     _wmslayer.prototype.getTileUrl = function(a, b, c){
         var lULP = new GPoint(a.x*256,(a.y+1)*256);
         var lLRP = new GPoint((a.x+1)*256,a.y*256);
@@ -88,6 +87,7 @@ GWMS.Layer = function(){
         }
 
         if(this.options.NO_CACHE){ url +='&r=' + (new Date()).getTime(); }
+        console.log(url);
         return url;
         
     };
@@ -98,12 +98,31 @@ GWMS.Layer = function(){
 
 }();
 
-GWMS.HybridSandwhich = function(/*{layername: [url, minZoom, maxZoom], ...} */) {
-    for(var layername in arguments[0]){
-            
+GWMS.HybridSandwich = function(/*typename, [{url:'http://...' ,url_options:{...}, ...], minResolution, maxResolution */) {
+    var tls = G_HYBRID_MAP.getTileLayers();
+    var layers = [tls[0]]
+    for(var layer in arguments[1]){
+        layer = arguments[1][layer];
+        layers.push(new GWMS.Layer(layer.url, layer.url_options));
     }
+    layers.push(tls[1]);
+    var mt = new GMapType(layers, G_NORMAL_MAP.getProjection(), arguments[0])
+    mt.getMinResolution = function(){ return arguments[2] || 0;  }
+    mt.getMaxResolution = function(){ return arguments[3] || 19; }
+    return mt
 };
 
+GWMS.OverNormal = function(/*typename, [{url:'http://...' ,url_options:{...}, ...], minResolution, maxResolution */) {
+    var layers = [G_NORMAL_MAP.getTileLayers()[0]];
+    for(var layer in arguments[1]){
+        layer = arguments[1][layer];
+        layers.push(new GWMS.Layer(layer.url, layer.url_options));
+    }
+    var mt = new GMapType(layers, G_NORMAL_MAP.getProjection(), arguments[0])
+    mt.getMinResolution = function(){ return arguments[2] || 0;  }
+    mt.getMaxResolution = function(){ return arguments[3] || 19; }
+    return mt
+};
 
 GMap2.prototype.fromLatLngToPixel = function(ll){
     var cornerll = map.fromContainerPixelToLatLng(new GPoint(0,0),true);

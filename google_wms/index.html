@@ -15,13 +15,10 @@
     function load() {
         map = new GMap2(document.getElementById("map"));
 
-        var myTileLayer= new GWMS.Layer(
-                    'http://wms.jpl.nasa.gov/wms.cgi?'
-                    ,{LAYERS:'global_mosaic'}
+        var myTileLayer= new GWMS.HybridSandwich("Custom Hybrid",
+                    [{url:'http://wms.jpl.nasa.gov/wms.cgi?', url_options: {LAYERS:'global_mosaic'}} ]
         );
 
-        var layer=[ myTileLayer, G_HYBRID_MAP.getTileLayers()[1]];
-        var mymaptype = new GMapType(layer, G_NORMAL_MAP.getProjection(), "Contour");
         map.getMapTypes().length = 0
         map.addMapType(mymaptype);
         map.addControl(new GLargeMapControl());
