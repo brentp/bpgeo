@@ -13,8 +13,9 @@ CHANGES from wms236.js:
 
 
 */
+if (typeof GWMS == 'undefined'){ var GWMS = {}; }
 
-var WMSLayer = function(){
+GWMS.Layer = function(){
     var MAGIC_NUMBER          = 6356752.3142; 
     var WGS84_SEMI_MAJOR_AXIS = 6378137.0;
     var WGS84_ECCENTRICITY    = 0.0818191913108718138;
@@ -34,12 +35,12 @@ var WMSLayer = function(){
     };
 
     var WGS84_DEG2RAD = WGS84_SEMI_MAJOR_AXIS * DEG2RAD; 
-    function DD2MetersLng(p_lng) {
+    function DD_to_meters_lng(p_lng) {
         return WGS84_DEG2RAD * p_lng;
     }
 
     PI2 = Math.PI / 2;
-    function DD2MetersLat(p_lat) {
+    function DD_to_meters_lat(p_lat) {
         var lat_rad = p_lat * DEG2RAD;
         var WGS84_SIN_LAT_RAD = WGS84_ECCENTRICITY * Math.sin(lat_rad);
         return WGS84_SEMI_MAJOR_AXIS * Math.log(Math.tan((lat_rad + PI2) / 2) 
@@ -50,6 +51,7 @@ var WMSLayer = function(){
 
     var _wmslayer = function(url,options){
         if(! options){ options = {}}
+        // _wmslayer.prototype = GTileLayer.prototype;
         this.url = url.indexOf('?') != -1 && url + '&' || url + '?';
         this.options = options;
         for(var key in DEFAULTS){
@@ -63,9 +65,9 @@ var WMSLayer = function(){
     }
 
     // inherit from the tile layer.
-    var tl = new GTileLayer(new GCopyrightCollection(""), 1, 17);
     var proj = G_NORMAL_MAP.getProjection();
-    _wmslayer.prototype = tl;
+    _wmslayer.prototype = new GTileLayer(new GCopyrightCollection(""), 1, 17);
+    _wmslayer.prototype = GTileLayer.prototype;
     _wmslayer.prototype.getTileUrl = function(a, b, c){
         var lULP = new GPoint(a.x*256,(a.y+1)*256);
         var lLRP = new GPoint((a.x+1)*256,a.y*256);
@@ -74,16 +76,17 @@ var WMSLayer = function(){
         var url;
         if(this.USE_MERCATOR){
             url = this.url + 'BBOX=' 
-                           + DD2MetersLng(lUL.x) + "," 
-                           + DD2MetersLat(lUL.y) + ","
-                           + DD2MetersLng(lLR.x) + "," 
-                           + DD2MetersLat(lLR.y) 
+                           + DD_to_meters_lng(lUL.x) + "," 
+                           + DD_to_meters_lat(lUL.y) + ","
+                           + DD_to_meters_lng(lLR.x) + "," 
+                           + DD_to_meters_lat(lLR.y) 
                            + '&SRS=EPSG:54004';
         }
         else {
             url = this.url + 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
                            + '&SRS=EPSG:4326';
         }
+
         if(this.options.NO_CACHE){ url +='&r=' + (new Date()).getTime(); }
         return url;
         
@@ -94,6 +97,12 @@ var WMSLayer = function(){
     return _wmslayer;
 
 }();
+
+GWMS.HybridSandwhich = function(/*{layername: [url, minZoom, maxZoom], ...} */) {
+    for(var layername in arguments[0]){
+            
+    }
+};
 
 
 GMap2.prototype.fromLatLngToPixel = function(ll){
