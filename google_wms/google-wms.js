@@ -102,7 +102,9 @@ GWMS.HybridSandwich = function(/*typename, [{url:'http://...' ,url_options:{...}
     var layers = [tls[0]]
     for(var layer in arguments[1]){
         layer = arguments[1][layer];
-        layers.push(new GWMS.Layer(layer.url, layer.url_options));
+        var tl = new GWMS.Layer(layer.url, layer.url_options)
+        tl.USE_MERCATOR = layer.options && layer.options.USE_MERCATOR;
+        layers.push(tl);
     }
     layers.push(tls[1]);
     var mt = new GMapType(layers, G_NORMAL_MAP.getProjection(), arguments[0])
@@ -115,7 +117,9 @@ GWMS.OverNormal = function(/*typename, [{url:'http://...' ,url_options:{...}, ..
     var layers = [G_NORMAL_MAP.getTileLayers()[0]];
     for(var layer in arguments[1]){
         layer = arguments[1][layer];
-        layers.push(new GWMS.Layer(layer.url, layer.url_options));
+        var tl = new GWMS.Layer(layer.url, layer.url_options);
+        layers.push(tl);
+        tl.USE_MERCATOR = layer.options && layer.options.USE_MERCATOR;
     }
     var mt = new GMapType(layers, G_NORMAL_MAP.getProjection(), arguments[0])
     mt.getMinResolution = function(){ return arguments[2] || 0;  }
