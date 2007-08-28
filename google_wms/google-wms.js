@@ -49,9 +49,10 @@ GWMS.Layer = function(){
                 , (WGS84_ECCENTRICITY/2)));
     }
 
-    var _wmslayer = function(url,options){
+    var _wmslayer = function(url,options, title){
         if(! options){ options = {}}
         this.url = url.indexOf('?') != -1 && url + '&' || url + '?';
+        this.title = title;
         this.options = options;
         for(var key in DEFAULTS){
             this.url += key + '=' 
