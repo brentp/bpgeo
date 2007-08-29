@@ -62,6 +62,7 @@ GWMS.Layer = function(){
         this.url = this.url.replace('?&','?');
         // NOTE: set USE_MERCATOR = true; after constructor call as desired.
         this.USE_MERCATOR = 0;
+        this.opacity = 0.999;
     }
 
     // inherit from the tile layer.
@@ -94,6 +95,7 @@ GWMS.Layer = function(){
     _wmslayer.prototype.getOpacity = function(){
         return this.opacity;
     };
+    _wmslayer.prototype.isPng = function(){ return 1; };
     return _wmslayer;
 
 }();
