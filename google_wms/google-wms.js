@@ -51,6 +51,7 @@ GWMS.Layer = function(){
 
     var _wmslayer = function(url,options, title){
         if(! options){ options = {}}
+        this.each_draw = {};
         this.url = url.indexOf('?') != -1 && url + '&' || url + '?';
         this.title = title;
         this.options = options;
@@ -89,6 +90,9 @@ GWMS.Layer = function(){
         }
 
         if(this.options.NO_CACHE){ url +='&r=' + (new Date()).getTime(); }
+        for ( var key in this.each_draw){
+            url += '&' + key + '=' + this.each_draw[key];
+        }
         return url;
         
     };
