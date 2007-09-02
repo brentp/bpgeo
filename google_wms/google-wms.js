@@ -169,3 +169,53 @@ GMap2.prototype.getFeatureInfo = function(pt,wmslayer){
     });
 
 };
+
+function WMSControl(url_path){ this.url_path = url_path; }
+WMSControl.prototype = new GControl(true, false) ;
+WMSControl.prototype.getDefaultPosition = function() {
+  return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(7, 31));
+};
+
+WMSControl.prototype.initialize = function(map){
+
+    // Make a container
+    var div = document.createElement('div');
+    div.id = 'wmscontrol_container';
+    div.innerHTML = '<p align="center">WMS LAYERS</p>';
+    GEvent.addDomListener(div, 'click', function(e){
+        e = e || window.event;
+        var cbx = e.target || e.srcElement;
+        if (!cbx.type || ! cbx.type.toUpperCase() == 'CHECKBOX'){ return false;}
+        var idx = cbx.id.replace('wmscbx','') - 1;
+        var layer = WMSControl.layers[idx];
+        return cbx.checked ? layer.show() : layer.hide();
+
+    });
+    map.getContainer().appendChild(div);
+    this.map = map;
+    this.n = 0;
+    return div;
+}
+WMSControl.layers = [];
+WMSControl.HTML = "<div class='wmscontrol'><input type='checkbox' id='wmscbx' CHECKED ><span class='wmstitle'>TITLE</span></div>";
+
+WMSControl.prototype.addOverlayLayer = function(wmslayer /*, hide=false */){
+    this.map.addOverlay(wmslayer);
+    var n = ++this.n;
+    var hide = arguments.length > 1 && arguments[1]
+    if(arguments.length > 2 && arguments[1] ){ wmslayer.hide(); }
+
+    html = WMSControl.HTML
+    var wmsc = document.getElementById('wmscontrol_container');
+    var title = wmslayer.getTileLayer().title;
+    if(hide){
+        html = html.replace('CHECKED','');
+        wmslayer.hide();
+    }
+    html = html.replace('TITLE',title).replace('wmscbx','wmscbx' + n);
+    wmsc.innerHTML += html;
+    var wmscbx = document.getElementById('wmscbx' + n);
+    // change it so it will be unique;
+    WMSControl.layers.push(wmslayer);
+
+}
