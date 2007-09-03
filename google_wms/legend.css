@@ -1,4 +1,17 @@
-<div class='wmscontrol'>
-<input type='checkbox' id='wmscbx' CHECKED >
-<span class='wmstitle'>TITLE</span>
-</div>
+.wmscontrol {
+    border: 1px inset #996038;
+}
+
+.wmscbx {
+
+}
+
+.wmstitle {
+    font-face:bold;
+}
+
+#wmscontrol_container {
+    background-color: #a9651e;
+    color: #fff;
+    border: 2px outset #ac6821;
+}
