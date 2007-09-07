@@ -186,13 +186,15 @@ WMSControl.prototype.initialize = function(map){
     var div = document.createElement('div');
     div.id = 'wmscontrol_container';
     div.innerHTML = '<p align="center">WMS Layers</p>';
-    GEvent.addDomListener(div, 'click', function(e){
+    GEvent.bindDom(div, 'click', this, function(e){
         e = e || window.event;
         var cbx = e.target || e.srcElement;
         if (!cbx.type || ! cbx.type.toUpperCase() == 'CHECKBOX'){ return false;}
         var idx = cbx.id.replace('wmscbx','') - 1;
         var layer = WMSControl.layers[idx];
-        return cbx.checked ? layer.show() : layer.hide();
+        // TODO: fix this layer.idx crap.
+        var idx = layer.idx;
+        return cbx.checked ? this.map.insertWMSLayer(layer, layer.idx) : this.map.removeWMSLayer(layer);
 
     });
     map.getContainer().appendChild(div);
@@ -203,21 +205,25 @@ WMSControl.prototype.initialize = function(map){
 WMSControl.layers = [];
 WMSControl.HTML = "<div class='wmscontrol'><input type='checkbox' id='wmscbx' CHECKED ><span class='wmstitle'>TITLE</span></div>";
 
-WMSControl.prototype.addOverlayLayer = function(wmslayer /*, hide=false */){
+WMSControl.prototype.addWMSLayer = function(wmslayer /*, idx=1, hide=false */){
     WMSControl.layers.push(wmslayer);
+    // TODO: fix layer.idx
+    var idx = arguments.length > 1 && arguments[1] || 1;
+    wmslayer.idx = idx;
     if(!hide){
-        this.map.insertWMSLayer(wmslayer);
+        this.map.insertWMSLayer(wmslayer, idx);
     }
     var n = ++this.n;
-    var hide = arguments.length > 1 && arguments[1] || false;
+    var hide = arguments.length > 2 && arguments[2] || false;
 
     html = WMSControl.HTML
     var wmsc = document.getElementById('wmscontrol_container');
-    var title = wmslayer.getTileLayer().title;
+    var title = wmslayer.title;
     html = html.replace('TITLE', title).replace('wmscbx', 'wmscbx' + n);
     wmsc.innerHTML += html;
     var wmscbx = document.getElementById('wmscbx' + n);
 };
+
 
 GMap2.prototype.insertWMSLayer = function(wmslayer, idx){
     var mt;
