@@ -208,18 +208,21 @@ WMSControl.HTML = "<div class='wmscontrol'><input type='checkbox' id='wmscbx' CH
 WMSControl.prototype.addWMSLayer = function(wmslayer /*, idx=1, hide=false */){
     WMSControl.layers.push(wmslayer);
     // TODO: fix layer.idx
-    var idx = arguments.length > 1 && arguments[1] || 1;
+    var idx = wmslayer.idx || arguments.length > 1 && arguments[1] || -1;
     wmslayer.idx = idx;
-    if(!hide){
-        this.map.insertWMSLayer(wmslayer, idx);
-    }
-    var n = ++this.n;
     var hide = arguments.length > 2 && arguments[2] || false;
+    var n = ++this.n;
 
     html = WMSControl.HTML
     var wmsc = document.getElementById('wmscontrol_container');
     var title = wmslayer.title;
     html = html.replace('TITLE', title).replace('wmscbx', 'wmscbx' + n);
+    if(!hide){
+        this.map.insertWMSLayer(wmslayer, idx);
+    }
+    else {
+        html = html.replace('CHECKED', '');
+    }
     wmsc.innerHTML += html;
     var wmscbx = document.getElementById('wmscbx' + n);
 };
@@ -253,7 +256,7 @@ GMap2.prototype.removeWMSLayer = function(wmslayer){
 GMap2.prototype.redraw = function(){
     /* trick it into forcing a redraw without loading images unnecessarily */
     var c = this.getCurrentMapType();
-    var cmt = new GMapType([c.getTileLayers()[0]],G_NORMAL_MAP.getProjection(),'');
+    var cmt = new GMapType(c.getTileLayers(),c.getProjection(),'');
     this.setMapType(cmt);
     return this.setMapType(c);
 };
