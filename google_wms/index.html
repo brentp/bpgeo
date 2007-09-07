@@ -5,13 +5,13 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>Google Maps WMSLayer</title>
     <script type="text/javascript"> alert = function(){};</script>
+<!--
     <script
     src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAyTERmRqYwOf1Ee4AOegF9xRetjBGwIc4P8WeP1_N5D3zVtRAghTq2bWtMtKxZqoMqxbAgmbuen4Nmw"
       type="text/javascript"></script>
-<!--
+-->
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAyTERmRqYwOf1Ee4AOegF9xSdKEdXMaiUNGBdECLKZUBd9VRTpBSPm45qgbjWklL85wavs00czt952w"
       type="text/javascript"></script>
--->
     <script type="text/javascript" src="google-wms.js"></script>
     <script type="text/javascript">
 
@@ -25,55 +25,14 @@
         urban_areas = new GWMS.Layer("/SOD/sod.wms?", {LAYERS:'urban_area'}, "Urban Areas");
         urban_areas.opacity = 0.8;
         
-        var layer = [G_NORMAL_MAP.getTileLayers()[0]]; //, G_HYBRID_MAP.getTileLayers()[1]];
-        mt = new GMapType(layer, G_NORMAL_MAP.getProjection(), 'test');
-        
         map.addControl(new GLargeMapControl());
         map.addControl(new GMapTypeControl());
 
         map.setCenter(new GLatLng(37.35655, -120.797144), 10);
         map.insertWMSLayer(urban_areas,1);
-        /*
-        mt.getTileLayers().push(urban_areas);
-        var c = map.getCurrentMapType()
-        map.setMapType(G_NORMAL_MAP);
-        map.setMapType(c);
-        */
     }
 
 
-GMap2.prototype.insertWMSLayer = function(wmslayer, idx){
-    var mt;
-    for(var i=0;mt=this.getMapTypes()[i]; ++i){
-        var tl = mt.getTileLayers();
-        if(idx > tl.length){ mt.getTileLayers().push(wmslayer);continue; }
-        mt.getTileLayers().splice(idx, 0, wmslayer);
-    }
-    this.redraw();
-};
-
-GMap2.EMPTY_NORMAL_MAP = new GMapType([G_NORMAL_MAP.getTileLayers()[0]],G_NORMAL_MAP.getProjection(),'');
-GMap2.EMPTY_SATELLITE_MAP = new GMapType([G_HYBRID_MAP.getTileLayers()[0]],G_NORMAL_MAP.getProjection(),'');
-
-GMap2.prototype.removeWMSLayer = function(wmslayer){
-    var mt;
-    for(var i=0;mt=this.getMapTypes()[i]; ++i){
-        var tls = mt.getTileLayers(); var tl;
-        for(var j=0;tl = tls[j]; ++j){
-            if(wmslayer==tl){
-                tls.splice(j,1);
-            }
-        }
-    }
-    this.redraw();
-}
-GMap2.prototype.redraw = function(){
-    /* trick it into forcing a redraw without loading images unnecessarily */
-    var c = this.getCurrentMapType();
-    var cmt = new GMapType([c.getTileLayers()[0]],G_NORMAL_MAP.getProjection(),'');
-    this.setMapType(cmt);
-    return this.setMapType(c);
-};
     //]]>
     </script>
   </head>

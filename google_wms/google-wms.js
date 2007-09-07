@@ -204,9 +204,10 @@ WMSControl.layers = [];
 WMSControl.HTML = "<div class='wmscontrol'><input type='checkbox' id='wmscbx' CHECKED ><span class='wmstitle'>TITLE</span></div>";
 
 WMSControl.prototype.addOverlayLayer = function(wmslayer /*, hide=false */){
-    this.map.addOverlay(wmslayer);
     WMSControl.layers.push(wmslayer);
-    wmslayer.hide();
+    if(!hide){
+        this.map.insertWMSLayer(wmslayer);
+    }
     var n = ++this.n;
     var hide = arguments.length > 1 && arguments[1] || false;
 
@@ -216,9 +217,38 @@ WMSControl.prototype.addOverlayLayer = function(wmslayer /*, hide=false */){
     html = html.replace('TITLE', title).replace('wmscbx', 'wmscbx' + n);
     wmsc.innerHTML += html;
     var wmscbx = document.getElementById('wmscbx' + n);
-    if(hide){
-        var l = WMSControl.layers[WMSControl.layers.length -1 ];
-        //console.log(l);
-        l.hide();
-    }
 };
+
+GMap2.prototype.insertWMSLayer = function(wmslayer, idx){
+    var mt;
+    for(var i=0;mt=this.getMapTypes()[i]; ++i){
+        var tl = mt.getTileLayers();
+        if(idx > tl.length){ mt.getTileLayers().push(wmslayer);continue; }
+        mt.getTileLayers().splice(idx, 0, wmslayer);
+    }
+    this.redraw();
+};
+
+GMap2.prototype.removeWMSLayer = function(wmslayer){
+    var mt;
+    var l;
+    for(var i=0;mt=this.getMapTypes()[i]; ++i){
+        var tls = mt.getTileLayers(); var tl;
+        for(var j=0;tl = tls[j]; ++j){
+            if(wmslayer==tl){
+                l = tls.splice(j,1);
+            }
+        }
+    }
+    this.redraw();
+    return l;
+}
+
+GMap2.prototype.redraw = function(){
+    /* trick it into forcing a redraw without loading images unnecessarily */
+    var c = this.getCurrentMapType();
+    var cmt = new GMapType([c.getTileLayers()[0]],G_NORMAL_MAP.getProjection(),'');
+    this.setMapType(cmt);
+    return this.setMapType(c);
+};
+
