@@ -18,10 +18,17 @@
         var mymaptype = new GWMS.HybridSandwich("Custom Hybrid",
                     [{url:'http://wms.jpl.nasa.gov/wms.cgi?', url_options: {LAYERS:'global_mosaic'}} ]
         );
+        urban_areas = new GWMS.Layer("/SOD/sod.wms?", {LAYERS:'urban_area'}, "Urban Areas");
+        urban_areas.opacity = 0.8;
+        
+        var layer = [G_HYBRID_MAP.getTileLayers()[0], G_HYBRID_MAP.getTileLayers()[1]];
+        var mt = new GMapType(layer, G_NORMAL_MAP.getProjection(), 'test');
+
 
         map.getMapTypes().length = 0
-        map.addMapType(mymaptype);
+        map.addMapType(mt);
         map.addControl(new GLargeMapControl());
+        map.addControl(new GMapTypeControl());
 
         map.setCenter(new GLatLng(37.35655, -120.797144), 10);
     }
