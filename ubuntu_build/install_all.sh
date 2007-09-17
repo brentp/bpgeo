@@ -19,6 +19,7 @@ firefox libxbase2.0-dev python-setuptools libfreetype6-dev \
 subversion apache2-utils apache2-threaded-dev apache2 wget libreadline5-dev \
 byacc bison rsnapshot postgresql-contrib-8.2 postgresql-server-dev-8.2
 
+# sudo apt-get install sun-java6-jdk
 
 # try to move to 2.5
 wget http://peak.telecommunity.com/dist/ez_setup.py
