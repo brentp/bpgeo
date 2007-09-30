@@ -185,7 +185,7 @@ WMSControl.prototype.initialize = function(map){
     // Make a container
     var div = document.createElement('div');
     div.id = 'wmscontrol_container';
-    div.innerHTML = '<p align="center">WMS Layers</p>';
+    div.innerHTML = '<div align="center" id="wmscontrol_title">WMS Layers</div>';
     GEvent.bindDom(div, 'click', this, function(e){
         e = e || window.event;
         var cbx = e.target || e.srcElement;
@@ -194,7 +194,10 @@ WMSControl.prototype.initialize = function(map){
         var layer = WMSControl.layers[idx];
         // TODO: fix this layer.idx crap.
         var idx = layer.idx;
+        //console.log(layer.options.LAYERS);
+        //var selector = 'img[@src*=LAYERS=' + layer.options.LAYERS + ']'
         return cbx.checked ? this.map.insertWMSLayer(layer, layer.idx) : this.map.removeWMSLayer(layer);
+        //return cbx.checked ? $(selector).show() : $(selector).hide();
 
     });
     map.getContainer().appendChild(div);
