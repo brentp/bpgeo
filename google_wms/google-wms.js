@@ -216,7 +216,7 @@ WMSControl.prototype.addWMSLayer = function(wmslayer /*, idx=1, hide=false */){
     var hide = arguments.length > 2 && arguments[2] || false;
     var n = ++this.n;
 
-    html = WMSControl.HTML
+    var html = WMSControl.HTML
     var wmsc = document.getElementById('wmscontrol_container');
     var title = wmslayer.title;
     html = html.replace('TITLE', title).replace('wmscbx', 'wmscbx' + n);
