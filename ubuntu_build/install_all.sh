@@ -1,7 +1,7 @@
 SRCDIR=/opt/src/
 sudo apt-get update 
 sudo apt-get upgrade
-sudo apt-get install vim  \
+sudo apt-get install vim build-essential \
 gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
 lapack3-dev  libgd2-xpm-dev   \
 refblas3-dev tcl8.4-dev tk8.4-dev  \
@@ -31,7 +31,7 @@ cd ${SRCDIR}/
 svn checkout http://modwsgi.googlecode.com/svn/trunk/ modwsgi
 cd modwsgi
 ./configure
-make
+make -j4
 sudo make install
 #echo 'LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so' >> /etc/apache2/apache2.conf
 # see the _very_ good docs for modwsgi on it's google project page. 
@@ -42,7 +42,7 @@ cd geos
 wget http://geos.refractions.net/geos-3.0.0rc4.tar.bz2
 tar xvf geos-3.0.0rc4.tar.bz2
 cd geos-3.0.0
-./configure;make; 
+./configure;make -j4; 
 sudo make install
 
 sudo echo "/usr/local/lib" >> /etc/ld.so.conf
@@ -54,7 +54,7 @@ wget http://download.osgeo.org/gdal/gdal-1.4.2.tar.gz
 tar zxvf gdal-1.4.2.tar.gz
 cd gdal-1.4.2
 ./configure --without-python --with-sqlite=/usr/include
-make -j2
+make -j4
 sudo make install
 
 sudo ldconfig
@@ -78,7 +78,7 @@ cvs up -dP
 --with-blas --with-lapack --with-python \
 --with-tcltk-includes=/usr/include/tcl8.4 \
 --with-readline 
-make
+make -j4
 cd raster; make; cd ..; cd vector; make; cd ..; cd misc; make; cd ..; cd display; make; cd ..; cd general; make; cd ..; cd imagery; make; cd ..; cd db; make; cd ..; cd ps; make; cd ..; cd gui; make; cd ..; cd visualization; make; cd ..; cd scripts; make; cd ..; cd tools; make; cd ..; cd gem; make; cd ..; cd sites; make; cd ..; 
 sudo make install
 
