@@ -100,7 +100,7 @@ cd mapserver
 --with-gdal=/usr/local/bin/gdal-config \
 --with-ogr=/usr/local/bin/gdal-config \
 --with-wmsclient --with-wfs \
---with-geos=/usr/bin/geos-config \
+--with-geos=/usr/local/bin/geos-config \
 --with-proj \
 --with-httpd=/usr/sbin/apache2 \
 --with-agg=/usr \
