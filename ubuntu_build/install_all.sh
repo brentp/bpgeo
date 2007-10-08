@@ -139,7 +139,10 @@ cd geodjango
 sudo python2.5 setup.py install
 
 sudo easy_install-2.5 -UZ http://initd.org/pub/software/psycopg/psycopg2-latest.tar.gz
+sudo easy_install-2.5 -UZ cython  # the sage version of pyrex with enhancements
 
 #### JAVA
 #wget http://www.iki.fi/kuparine/comp/ubuntu/install.sh
 #sh install.sh
+
+
