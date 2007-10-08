@@ -1,0 +1,7 @@
+memoize makes a persistent cache of function calls. good for doing
+debugging for screen scraping so the page is only fetched once.
+therefore, you can parse the same html without repeatedly hitting teh
+originating server.
+
+tiff_to_gdal converts a numpy array to a .tiff file suitable for
+display in mapserver
