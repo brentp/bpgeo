@@ -9,7 +9,7 @@ scalapack-lam-dev \
 atlas3-base-dev \
 libatlas-cpp-0.6-dev \
 fftw3-dev libumfpack4-dev \
-swig sqlite3 cvs \
+swig sqlite3 cvs libmysqlclient-dev \
 libpng12-dev libpq-dev libgl1-mesa-dev libglu1-mesa-dev \
 libboost-dev openssh-server  ssh-askpass \
 blitz++ proj imagemagick libagg-dev keychain \
