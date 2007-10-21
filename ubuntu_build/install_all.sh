@@ -46,8 +46,9 @@ cd ${SRCDIR}
 mkdir geos
 cd geos
 wget http://geos.refractions.net/geos-3.0.0rc4.tar.bz2
-tar xvf geos-3.0.0rc4.tar.bz2
-cd geos-3.0.0
+bunzip2 geos-3.0.0rc4.tar.bz2
+tar xvf geos-3.0.0rc4.tar
+cd geos-3.0.0rc4
 ./configure;make -j4; 
 sudo make install
 
