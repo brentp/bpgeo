@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
+import os
+os.environ['HOME'] = '/tmp/'
+import matplotlib
+matplotlib.use('Agg')
 from pylab import contour, show
 import cPickle
 import ogr
-import os
 import tempfile
 
-def numpy_to_shape(x, y, z, shpname=None, epsg=26910, group='', levels=None):
+def numpy_to_shape(x, y, z, shpname=None, epsg=54004, group='', levels=None):
     """turn a numpy grid array into a shapefile. 
     x, y, z are grids (likely from meshgrid (x, y) and interpolation (z)
     of the original data. 
@@ -21,7 +24,7 @@ def numpy_to_shape(x, y, z, shpname=None, epsg=26910, group='', levels=None):
     
     if not shpname:
         # could have problems because not using mkstemp...
-        shpname = tempfile.mktemp(dir='/tmp/shps', suffix='.shp')
+        shpname = tempfile.mktemp(dir='/var/www/ms_tmp', suffix='.shp')
 
     # pylab.contour does the work of figuring out the contours.
     cont = contour(x, y, z, levels=levels, colors='k')
@@ -39,9 +42,8 @@ def numpy_to_shape(x, y, z, shpname=None, epsg=26910, group='', levels=None):
         field = ogr.FieldDefn(FIELD_NAME, ogr.OFTReal)
         field.SetPrecision(2)
         layer.CreateField(field)
-        if group:
-            group_field = ogr.FieldDefn(GROUP_NAME, ogr.OFTString)
-            layer.CreateField(group_field)
+        group_field = ogr.FieldDefn(GROUP_NAME, ogr.OFTString)
+        layer.CreateField(group_field)
 
 
     # iterate through the contours created by pylab.contour and 
@@ -54,8 +56,7 @@ def numpy_to_shape(x, y, z, shpname=None, epsg=26910, group='', levels=None):
         geom = ogr.CreateGeometryFromWkt(line_str % pts)
 
         f.SetField(FIELD_NAME, cont.levels[i])
-        if group:
-            f.SetField(GROUP_NAME, group)
+        f.SetField(GROUP_NAME, group)
 
         f.SetGeometryDirectly(geom)
         layer.CreateFeature(f)
