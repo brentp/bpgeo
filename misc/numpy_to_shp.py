@@ -19,8 +19,8 @@ def numpy_to_shape(x, y, z, shpname=None, epsg=None, group='', levels=None, mask
     group: to add a new group (likely a new shpname merits a group indication
     levels: same as for pylab.contour 
     mask_wkt: e.g. the watershed to clip on. stops contours from appearing outside the watershed.
-
     """
+
     FIELD_NAME = 'contour' # the field name for the z contour level.
     GROUP_NAME = 'group'   # the name for different groups of contours.
     
