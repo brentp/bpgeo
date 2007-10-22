@@ -48,7 +48,9 @@ def numpy_to_shape(x, y, z, shpname=None, epsg=None, group='', levels=None, mask
         field.SetWidth(4)
         field.SetPrecision(2)
         layer.CreateField(field)
+
         group_field = ogr.FieldDefn(GROUP_NAME, ogr.OFTString)
+        group_field.SetWidth(12)
         layer.CreateField(group_field)
 
 
