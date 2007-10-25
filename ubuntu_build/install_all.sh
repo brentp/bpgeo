@@ -97,6 +97,7 @@ cd postgis-svn
 LDFLAGS=-lstdc++ ./configure --prefix=/usr/local
 make
 sudo make install
+# and set client_encoding = unicode in postgresql.conf
 
 
 cd ${SRCDIR}

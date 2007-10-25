@@ -34,7 +34,7 @@ def numpy_to_shape(x, y, z, shpname=None, epsg=None, group='', levels=None, mask
     # pylab.contour does the work of figuring out the contours.
     cont = contour(x, y, z, levels=levels, colors='k', origin='lower')
     shp = ogr.GetDriverByName('ESRI Shapefile')
-
+    # see also mapscript: mapscript.shapeObj.fromWKT('POINT(2 2)')
 
     # ogr setup, create that datasource, layer, fields for the .shp 
     if os.path.exists(shpname):
