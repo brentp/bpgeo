@@ -4,7 +4,7 @@ import os
 os.environ['HOME'] = '/tmp/'
 import matplotlib
 matplotlib.use('Agg')
-from pylab import contour
+from pylab import contour, savefig
 import cPickle
 import ogr
 import tempfile
@@ -58,19 +58,21 @@ def numpy_to_shape(x, y, z, shpname=None, epsg=None, group='', levels=None, mask
     # create wkt to add to a shapefile. 
     line_str = 'LINESTRING(%s)'
     for i,c in enumerate(cont.collections):
-        f = ogr.Feature(feature_def=layer.GetLayerDefn())
+        # using c.get_verts() doesnt separate distinct shapes at the
+        # same contour level. so access the segements directly.
+        for seg in c._segments:
+            f = ogr.Feature(feature_def=layer.GetLayerDefn())
+            pts = ",".join(["%f %f" % (x, y) for k,(x,y) in enumerate(seg) if k % 2])
+            geom = ogr.CreateGeometryFromWkt(line_str % pts)
+            if mask_wkt:
+                geom = geom.Intersection(mask_wkt)
 
-        pts = ",".join(["%f %f" % (x, y) for x,y in c.get_verts()])
-        geom = ogr.CreateGeometryFromWkt(line_str % pts)
-        if mask_wkt:
-            geom = geom.Intersection(mask_wkt)
+            f.SetField(FIELD_NAME, cont.levels[i])
+            f.SetField(GROUP_NAME, group)
 
-        f.SetField(FIELD_NAME, cont.levels[i])
-        f.SetField(GROUP_NAME, group)
-
-        f.SetGeometryDirectly(geom)
-        layer.CreateFeature(f)
-        f.Destroy()
+            f.SetGeometryDirectly(geom)
+            layer.CreateFeature(f)
+            f.Destroy()
     data_source.Destroy()
 
     # write the projection file. as ogr wont do it for us.
