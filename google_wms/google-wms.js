@@ -55,10 +55,6 @@ GWMS.Layer = function(){
         this.url = url.indexOf('?') != -1 && url + '&' || url + '?';
         this.title = title;
         this.options = options;
-        for(var key in DEFAULTS){
-            this.url += key + '=' 
-                + (options[key] || DEFAULTS[key]) + '&';
-        }
         // NASA doesn't like this...
         this.url = this.url.replace('?&','?');
         // NOTE: set USE_MERCATOR = true; after constructor call as desired.
@@ -75,9 +71,13 @@ GWMS.Layer = function(){
         var lLRP = new GPoint((a.x+1)*256,a.y*256);
         var lUL = proj.fromPixelToLatLng(lULP,b,c);
         var lLR = proj.fromPixelToLatLng(lLRP,b,c);    
-        var url;
+        var url = this.url;
+        for(var key in DEFAULTS){
+            url += key + '=' 
+                + (this.options[key] || DEFAULTS[key]) + '&';
+        }
         if(this.USE_MERCATOR){
-            url = this.url + 'BBOX=' 
+            url += 'BBOX=' 
                            + DD_to_meters_lng(lUL.x) + "," 
                            + DD_to_meters_lat(lUL.y) + ","
                            + DD_to_meters_lng(lLR.x) + "," 
@@ -85,7 +85,7 @@ GWMS.Layer = function(){
                            + '&SRS=EPSG:54004';
         }
         else {
-            url = this.url + 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
+            url += 'BBOX=' + [lUL.x, lUL.y, lLR.x, lLR.y].join(",")
                            + '&SRS=EPSG:4326';
         }
 
