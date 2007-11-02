@@ -149,8 +149,15 @@ sudo python2.5 setup.py install
 sudo easy_install-2.5 -UZ http://initd.org/pub/software/psycopg/psycopg2-latest.tar.gz
 sudo easy_install-2.5 -UZ cython  # the sage version of pyrex with enhancements
 
-#### JAVA
-#wget http://www.iki.fi/kuparine/comp/ubuntu/install.sh
-#sh install.sh
+cd $SRCDIR
+mkdir terminusfont
+cd terminusfont
+wget http://mateusz.loskot.net/download/tools/terminus-font.tar.gz
+tar xzvf terminus-font.tar.gz
+cd terminus-font
+sudo mkdir /usr/share/fonts/truetype/ttf-terminus/
+sudo cp eric-cheng/* !$
+sudo fc-cache -f -v
+
 
 
