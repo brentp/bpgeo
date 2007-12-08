@@ -7,7 +7,11 @@ matplotlib.use('Agg')
 from pylab import contour, savefig
 import numpy
 import cPickle
-import ogr
+try:
+    from osgeo import ogr
+except:
+    import ogr
+
 import sys
 import tempfile
 
