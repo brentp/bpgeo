@@ -206,7 +206,7 @@ WMSControl.prototype.initialize = function(map){
     return div;
 }
 WMSControl.layers = [];
-WMSControl.HTML = "<div class='wmscontrol'><input type='checkbox' id='wmscbx' CHECKED ><span class='wmstitle'>TITLE</span></div>";
+WMSControl.HTML = "<div class='wmscontrol'><input type='checkbox' id='wmscbx' CHECKED ><span id='ID' class='wmstitle'>TITLE</span></div>";
 
 WMSControl.prototype.addWMSLayer = function(wmslayer /*, idx=1, hide=false */){
     WMSControl.layers.push(wmslayer);
@@ -219,7 +219,7 @@ WMSControl.prototype.addWMSLayer = function(wmslayer /*, idx=1, hide=false */){
     var html = WMSControl.HTML
     var wmsc = document.getElementById('wmscontrol_container');
     var title = wmslayer.title;
-    html = html.replace('TITLE', title).replace('wmscbx', 'wmscbx' + n);
+    html = html.replace('TITLE', title).replace('wmscbx', 'wmscbx' + n).replace('ID', 'wmstitle' + n)
     if(!hide){
         this.map.insertWMSLayer(wmslayer, idx);
     }

@@ -21,7 +21,7 @@
     function load() {
         map = new GMap2(document.getElementById("map"));
 
-        urban_areas = new GWMS.Layer("/SOD/sod.wms?", {LAYERS:'urban_area'}, "Urban Areas");
+        urban_areas = new GWMS.Layer("http://128.32.8.100/SOD/sod.wms?", {LAYERS:'urban_area'}, "Urban Areas");
         urban_areas.opacity = 0.8;
         
         map.addControl(new GLargeMapControl());
