@@ -31,6 +31,7 @@ sudo echo "<54004> +proj=merc +lat_ts=0 +lon_0=0 +k=1.000000 +x_0=0 +y_0=0 +ellp
 wget http://peak.telecommunity.com/dist/ez_setup.py
 sudo python2.5 ez_setup.py
 sudo easy_install-2.5 -UZ http://effbot.org/downloads/Imaging-1.1.6.tar.gz
+sudo easy_install -UZ http://www.parallelpython.com/downloads/pp/pp-1.5.tar.gz
 
 mkdir ${SRCDIR}/
 cd ${SRCDIR}/
@@ -137,28 +138,6 @@ cd scipy
 echo "numexpr" > Lib/sandbox/enabled_packages.txt
 sudo python2.5 setup.py install
 
-cd ${SRCDIR}/
-svn co http://ipython.scipy.org/svn/ipython/ipython/trunk ipython
-cd ${SRCDIR}/ipython/
-sudo python2.5 setup.py install
-
-cd ${SRCDIR}
-svn co http://code.djangoproject.com/svn/django/branches/gis geodjango
-cd geodjango
-sudo python2.5 setup.py install
-
+sudo easy_install -UZ ipython==dev
 sudo easy_install-2.5 -UZ http://initd.org/pub/software/psycopg/psycopg2-latest.tar.gz
 sudo easy_install-2.5 -UZ cython  # the sage version of pyrex with enhancements
-
-cd $SRCDIR
-mkdir terminusfont
-cd terminusfont
-wget http://mateusz.loskot.net/download/tools/terminus-font.tar.gz
-tar xzvf terminus-font.tar.gz
-cd terminus-font
-sudo mkdir /usr/share/fonts/truetype/ttf-terminus/
-sudo cp eric-cheng/* !$
-sudo fc-cache -f -v
-
-
-
