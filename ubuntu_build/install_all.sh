@@ -12,7 +12,7 @@ fftw3-dev libumfpack4-dev \
 swig sqlite3 cvs libmysqlclient-dev \
 libpng12-dev libpq-dev libgl1-mesa-dev libglu1-mesa-dev \
 libboost-dev openssh-server  ssh-askpass \
-blitz++ proj imagemagick libagg-dev keychain \
+ proj imagemagick libagg-dev keychain \
 curl libcurl3-dev libtiff4-dev liblzo2-dev \
 php5-dev byacc libiconv-hook-dev flex recode \
 firefox libxbase2.0-dev python-setuptools libfreetype6-dev \
@@ -20,6 +20,7 @@ subversion apache2-utils apache2-threaded-dev apache2 wget libreadline5-dev \
 byacc bison rsnapshot postgresql-contrib-8.2 postgresql-server-dev-8.2
 
 sudo apt-get install libcurl4-dev
+sudo apt-get install blitz
 
 sudo echo "<900913> +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs  <>" >> /usr/share/proj/epsg
 sudo echo "<54004> +proj=merc +lat_ts=0 +lon_0=0 +k=1.000000 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs <>" >> /usr/share/proj/epsg
@@ -35,8 +36,9 @@ sudo easy_install -UZ http://www.parallelpython.com/downloads/pp/pp-1.5.tar.gz
 
 mkdir ${SRCDIR}/
 cd ${SRCDIR}/
-svn checkout http://modwsgi.googlecode.com/svn/trunk/ modwsgi
-cd modwsgi
+wget http://modwsgi.googlecode.com/files/mod_wsgi-1.3.tar.gz
+tar xzvf mod_wsgi-1.3.tar.gz
+cd mod_wsgi-1.3
 ./configure
 make -j4
 sudo make install
@@ -47,11 +49,12 @@ sudo make install
 cd ${SRCDIR}
 mkdir geos
 cd geos
-wget http://geos.refractions.net/geos-3.0.0rc4.tar.bz2
-bunzip2 geos-3.0.0rc4.tar.bz2
-tar xvf geos-3.0.0rc4.tar
-cd geos-3.0.0rc4
-./configure;make -j4; 
+wget http://geos.refractions.net/downloads/geos-3.0.0rc5.tar.bz2
+bunzip2 geos-3.0.0rc5.tar.bz2
+tar xvf geos-3.0.0rc5.tar
+cd geos-3.0.0rc5
+./configure --with-python
+;make -j4; 
 sudo make install
 
 sudo echo "/usr/local/lib" >> /etc/ld.so.conf
@@ -59,14 +62,12 @@ sudo ldconfig
 
 mkdir ${SRCDIR}/gdal
 cd ${SRCDIR}/gdal
-wget http://download.osgeo.org/gdal/gdal-1.4.2.tar.gz
-tar zxvf gdal-1.4.2.tar.gz
-cd gdal-1.4.2
-./configure --without-python --with-sqlite=/usr/include
+svn checkout https://svn.osgeo.org/gdal/trunk/gdal gdalsvn
+cd gdalsvn
+./configure
 make -j4
 sudo make install
 
-sudo ldconfig
 #######################################################
 # GRASS: http://grass.itc.it/download/index.php
 #  http://trac.osgeo.org/gdal/wiki/GRASS
@@ -93,8 +94,9 @@ sudo make install
 
 
 cd ${SRCDIR}
-svn checkout http://svn.refractions.net/postgis/trunk postgis-svn
-cd postgis-svn
+wget http://postgis.refractions.net/download/postgis-1.3.2.tar.gz
+tar xzvf postgis-1.3.2
+cd postgis-1.3.2.tar.gz
 # these LDFLAGS, prefix seem necessary
 LDFLAGS=-lstdc++ ./configure --prefix=/usr/local
 make
@@ -103,10 +105,11 @@ sudo make install
 
 
 cd ${SRCDIR}
-svn co https://svn.osgeo.org/mapserver/trunk/mapserver mapserver
-cd mapserver
+svn co https://svn.osgeo.org/mapserver/trunk/mapserver mapserversvn
+cd mapserversvn
 ./configure \
 --with-postgis=/usr/bin/pg_config \
+--with-threads \
 --with-gdal=/usr/local/bin/gdal-config \
 --with-ogr=/usr/local/bin/gdal-config \
 --with-wmsclient --with-wfs \
@@ -119,18 +122,17 @@ cd mapserver
 make
 sudo mkdir /usr/lib/cgi-bin/
 sudo cp mapserv /usr/lib/cgi-bin/
+cd mapscript/python
+sudo rm -rf build
+swig -python -shadow -modern -templatereduce -fastdispatch -fvirtual -fastproxy -modernargs -castmode -dirvtable -fastinit -fastquery -noproxydel -nobuildnone -o mapscript_wrap.c ../mapscript.i
+sudo python setup.py install
 
 cd ${SRCDIR}
 svn co http://svn.scipy.org/svn/numpy/trunk numpy
 cd ${SRCDIR}/numpy
 sudo python2.5 setup.py install
 
-cd ${SRCDIR}
-svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/matplotlib/ matplotlib
-cd ${SRCDIR}/matplotlib/
-# set all *BUILD* = 0 except for BUILD_WXAGG = 'auto'
-# may need to set BUILD_GTK = 0 in multiple places in setup.py
-sudo python2.5 setup.py install
+sudo easy_install matplotlib
 
 cd ${SRCDIR}/
 svn co http://svn.scipy.org/svn/scipy/trunk scipy
