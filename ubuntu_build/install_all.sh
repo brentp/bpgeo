@@ -21,6 +21,7 @@ byacc bison rsnapshot postgresql-contrib-8.2 postgresql-server-dev-8.2
 
 sudo apt-get install libcurl4-dev
 sudo apt-get install blitz
+sudo apt-get install h5utils
 
 sudo echo "<900913> +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs  <>" >> /usr/share/proj/epsg
 sudo echo "<54004> +proj=merc +lat_ts=0 +lon_0=0 +k=1.000000 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs <>" >> /usr/share/proj/epsg
