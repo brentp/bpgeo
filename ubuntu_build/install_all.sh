@@ -50,7 +50,7 @@ sudo make install
 cd ${SRCDIR}
 mkdir geos
 cd geos
-wget http://geos.refractions.net/downloads/geos-3.0.0rc5.tar.bz2
+http://geos.refractions.net/downloads/geos-3.0.0.tar.bz2
 bunzip2 geos-3.0.0rc5.tar.bz2
 tar xvf geos-3.0.0rc5.tar
 cd geos-3.0.0rc5
