@@ -50,7 +50,7 @@ sudo make install
 cd ${SRCDIR}
 mkdir geos
 cd geos
-http://geos.refractions.net/downloads/geos-3.0.0.tar.bz2
+wget http://geos.refractions.net/downloads/geos-3.0.0.tar.bz2
 bunzip2 geos-3.0.0rc5.tar.bz2
 tar xvf geos-3.0.0rc5.tar
 cd geos-3.0.0rc5
@@ -95,8 +95,10 @@ sudo make install
 
 
 cd ${SRCDIR}
+mkdir postgis
+cd postgis
 wget http://postgis.refractions.net/download/postgis-1.3.2.tar.gz
-tar xzvf postgis-1.3.2
+tar xzvf postgis-1.3.2.tar.gz
 cd postgis-1.3.2.tar.gz
 # these LDFLAGS, prefix seem necessary
 LDFLAGS=-lstdc++ ./configure --prefix=/usr/local
