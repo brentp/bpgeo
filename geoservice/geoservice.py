@@ -39,8 +39,12 @@ import simplejson as SJ
 import sys
 import web
 from urllib import urlopen
-import ogr
-import osr
+try:
+    from osgeo import ogr
+    from osgeo import osr
+except:
+    import ogr
+    import osr
 
 YAHOO_ID = 'brent_s_p'
 # see also
@@ -197,7 +201,7 @@ class javascript(object):
 
     function reverse_geocode(x,y,epsg){
         epsg = epsg != undefined ? epsg : '4326'
-        jfetch('/proxy/geoservice.py/reverse_geocode/' 
+        jfetch('reverse_geocode/' 
             + x + '/' + y +  '?epsg=' + epsg
             , function(res){ 
                 if (res.indexOf('{}') != -1) return reverse_geocode.error();
