@@ -162,7 +162,7 @@ GMap2.prototype.getFeatureInfo = function(pt,wmslayer){
              + '&BBOX=' + bds
              + '&INFO_FORMAT=text/html';
 
-    var ma = url.match(/(LAYERS=[^&?]+)/)[0];
+    var ma = url.match(/(LAYERS=[^&]+)/)[0];
     url += ma.replace('LAYERS','QUERY_LAYERS');
 
     var self = this;
