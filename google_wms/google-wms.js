@@ -160,7 +160,7 @@ GMap2.prototype.getFeatureInfo = function(pt,wmslayer){
              + '&Y=' + imgxy.y
              + '&SRS=EPSG:' + (wmslayer.USE_MERCATOR ? '41001' : '4326')
              + '&BBOX=' + bds
-        biase/michigan/mapserver/mashcache.wsgi?LAYERS=soil&FORMAT=image/png&HEIGHT=256&REASPECT=FALSE"     + '&INFO_FORMAT=text/html';
+             + '&INFO_FORMAT=text/html';
     var ma = url.match(/(LAYERS=[^&]+)/)[0];
     url += ma.replace('LAYERS','QUERY_LAYERS');
 
