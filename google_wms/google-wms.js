@@ -161,7 +161,7 @@ GMap2.prototype.getFeatureInfo = function(pt,wmslayer){
              + '&SRS=EPSG:' + (wmslayer.USE_MERCATOR ? '41001' : '4326')
              + '&BBOX=' + bds
              + '&INFO_FORMAT=text/html';
-
+    console.log(url);
     var ma = url.match(/(LAYERS=[^&]+)/)[0];
     url += ma.replace('LAYERS','QUERY_LAYERS');
 
