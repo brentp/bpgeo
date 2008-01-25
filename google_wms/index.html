@@ -6,10 +6,11 @@
     <title>Google Maps WMSLayer</title>
      <link href="http://bpgeo.googlecode.com/svn/trunk/google_wms/legend.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript"> alert = function(){};</script>
-    <script
-    src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAyTERmRqYwOf1Ee4AOegF9xRetjBGwIc4P8WeP1_N5D3zVtRAghTq2bWtMtKxZqoMqxbAgmbuen4Nmw"
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAyTERmRqYwOf1Ee4AOegF9xRetjBGwIc4P8WeP1_N5D3zVtRAghTq2bWtMtKxZqoMqxbAgmbuen4Nmw"
       type="text/javascript"></script>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAyTERmRqYwOf1Ee4AOegF9xSdKEdXMaiUNGBdECLKZUBd9VRTpBSPm45qgbjWklL85wavs00czt952w"
+      type="text/javascript"></script>
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAyTERmRqYwOf1Ee4AOegF9xRyjc-JUyMkOgIP3Bd23FHRx1Wr4xQ-oR1OnxExEdglcGofenjIWr493g"
       type="text/javascript"></script>
     <script type="text/javascript" src="google-wms.js"></script>
     <script type="text/javascript">
@@ -17,12 +18,12 @@
     //<![CDATA[
     var map;
     var mt;
-    var urban_areas;
+    var fires;
     function load() {
-        map = new GMap2(document.getElementById("map"));
+        map = new GMap2(document.getElementById("map"),  { draggableCursor: 'pointer' } );
 
-        urban_areas = new GWMS.Layer("http://128.32.8.100/SOD/sod.wms?", {LAYERS:'urban_area'}, "Urban Areas");
-        urban_areas.opacity = 0.8;
+        fires = new GWMS.Layer("http://169.229.201.200/cgi-bin/mapserv?map=/opt/web/fire/wms_frap.map&", {LAYERS:'FRAP,COUNTIES'}, "CA Fire Risk");
+        fires.opacity = 0.8;
         
         map.addControl(new GLargeMapControl());
         map.addControl(new GMapTypeControl());
@@ -30,7 +31,13 @@
         map.setCenter(new GLatLng(37.35655, -120.797144), 10);
         var wmscontrol = new WMSControl();
         map.addControl(wmscontrol);
-        wmscontrol.addWMSLayer(urban_areas,1);
+        wmscontrol.addWMSLayer(fires,1);
+
+
+        /* QUERY WITH getFeatureInfo(point, fires) */
+        GEvent.addListener(map,"click", function(overlay,point) {     
+            map.getFeatureInfo(point, fires);
+        });
     }
 
 
@@ -38,6 +45,7 @@
     </script>
   </head>
   <body onload="load()" onunload="GUnload()">
+    <h3>Click The Map To Query (worsk on same host, or with proxy)</h3>
     <div id="map" style="width: 600px; height: 500px"></div>
   </body>
 </html>
