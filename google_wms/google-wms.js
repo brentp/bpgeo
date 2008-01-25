@@ -151,7 +151,7 @@ GMap2.prototype.getFeatureInfo = function(point, wmslayer, callback){
     bds = [bds[1], bds[0], bds[3], bds[2]].join(",");
     var imgxy = this.fromLatLngToPixel(point);
 
-    var url = wmslayer.url + "VERSION=1.1.1&FORMAT=image/png&REQUEST=GetFeatureInfo&BBOX=" + bds;
+    var url = wmslayer.url + "VERSION=1.1.1&FORMAT=text/html&REQUEST=GetFeatureInfo&BBOX=" + bds;
     url += "&WIDTH=" + this.getSize().width + "&HEIGHT=" + this.getSize().height + "&X=" + imgxy.x + "&Y=" + imgxy.y;
     url += "&INFO_FORMAT=text/html&QUERY_LAYERS=&" + wmslayer.options.LAYERS;
     url += "&LAYERS=" + wmslayer.options.LAYERS + "&SRS=EPSG:4326";
