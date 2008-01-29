@@ -134,7 +134,6 @@ GWMS.OverNormal = function(/*typename, [{url:'http://...' ,url_options:{...}, ..
     return mt
 };
 
-/*
 GMap2.prototype.fromLatLngToPixel = function(ll){
     var cornerll = map.fromContainerPixelToLatLng(new GPoint(0,0),true);
     var cornerxy = this.fromLatLngToDivPixel(cornerll);
@@ -143,7 +142,7 @@ GMap2.prototype.fromLatLngToPixel = function(ll){
     imgxy.x -= cornerxy.x;
     imgxy.y -= cornerxy.y;
     return imgxy;
-}*/
+}
 
 /* take an x and y and the wmslayer and do a get featureinfo requests.  */
 GMap2.prototype.getFeatureInfo = function(point, wmslayer, callback){
