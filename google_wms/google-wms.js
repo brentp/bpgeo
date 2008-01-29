@@ -147,6 +147,7 @@ GMap2.prototype.fromLatLngToPixel = function(ll){
 
 /* take an x and y and the wmslayer and do a get featureinfo requests.  */
 GMap2.prototype.getFeatureInfo = function(point, wmslayer, callback){
+    if(! point ) { return; }
     var bds = this.getBounds().toString();
     bds = bds.replace(/[\)\(\s]/g,'').split(",");
     bds = [bds[1], bds[0], bds[3], bds[2]].join(",");
