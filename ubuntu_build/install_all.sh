@@ -6,7 +6,7 @@ gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
 lapack3-dev  libgd2-xpm-dev   \
 refblas3-dev tcl8.4-dev tk8.4-dev  \
 scalapack-lam-dev \
-atlas3-base-dev \
+atlas3-base-dev rlwrap \
 libatlas-cpp-0.6-dev \
 fftw3-dev libumfpack4-dev \
 swig sqlite3 cvs libmysqlclient-dev \
