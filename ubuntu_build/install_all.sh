@@ -37,9 +37,9 @@ sudo easy_install -UZ http://www.parallelpython.com/downloads/pp/pp-1.5.tar.gz
 
 mkdir ${SRCDIR}/
 cd ${SRCDIR}/
-wget http://modwsgi.googlecode.com/files/mod_wsgi-1.3.tar.gz
-tar xzvf mod_wsgi-1.3.tar.gz
-cd mod_wsgi-1.3
+wget http://modwsgi.googlecode.com/files/mod_wsgi-2.0.tar.gz
+tar xzvf mod_wsgi-2.0.tar.gz
+cd mod_wsgi-2.0
 ./configure
 make -j4
 sudo make install
