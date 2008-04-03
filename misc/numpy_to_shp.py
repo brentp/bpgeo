@@ -152,7 +152,15 @@ def numpy_to_shape(x, y, z, shpname=None, x0=0, y0=0, theta=None, connect=False,
 
         # using c.get_verts() doesnt separate distinct shapes at the
         # same contour level. so access the segements directly.
-        for seg in c._segments:
+        # do some extra stuff to account ro api change in matplotlib.
+        # get_paths() is newer version.
+        segments = None
+        if hasattr(c, "_segments"): segments = c._segments
+        else: segments = c.get_paths()
+        for seg in segments:
+            if hasattr(seg, "vertices"):
+                seg = seg.vertices
+            print >>sys.stderr, dir(seg)
             if theta is not None: seg = rotate(seg, theta)
             # make it into a ring
             if not i:
