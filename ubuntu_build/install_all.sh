@@ -51,11 +51,10 @@ cd ${SRCDIR}
 mkdir geos
 cd geos
 wget http://geos.refractions.net/downloads/geos-3.0.0.tar.bz2
-bunzip2 geos-3.0.0rc5.tar.bz2
-tar xvf geos-3.0.0rc5.tar
-cd geos-3.0.0rc5
-./configure --with-python
-;make -j4; 
+bunzip2 geos-3.0.0.tar.bz2
+tar xvf geos-3.0.0.tar
+cd geos-3.0.0
+./configure;make -j4; 
 sudo make install
 
 sudo echo "/usr/local/lib" >> /etc/ld.so.conf
