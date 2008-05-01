@@ -1,0 +1,7 @@
+# build with haxe build.hxml
+-swf nback.swf
+-swf-version 9
+-swf-header 400:400:30:ffffff
+-main NBack
+--flash-strict
+--no-traces

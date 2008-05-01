@@ -1,0 +1,44 @@
+<html>
+<head>
+<script src="static/swfobject.js"></script>
+</script>
+</head>
+<body>
+<h3>Get Smarter</h3>
+<p>
+See: 
+<br/>
+<a href="http://www.newscientist.com/channel/being-human/dn13786-simple-brain-exercise-can-boost-iq.html">Simple brain exercise can boost IQ</a>
+<br/>
+<a href="http://www.pnas.org/cgi/content/abstract/0801268105v1">PNAS article</a>
+</p>
+
+<p>
+<h4>Difficulty Levels</h4>
+<a href="index.html?show_time=1500&time_step=2000&nback=2">easy</a><br/>
+<a href="index.html?show_time=500&time_step=3000&nback=2">standard</a><br/>
+<a href="index.html?show_time=500&time_step=3000&nback=3">hard (nback = 3)</a><br/>
+<a href="index.html?show_time=500&time_step=500&nback=3">insane</a><br/>
+</p>
+<div id="flashcontent">
+    <strong>You need to install <a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Flash Player</a> (or turn it back on in your browser settings).</strong>
+</div>
+
+<script type="text/javascript">
+    // <![CDATA[
+    var width  = /* swfobject.getQueryParamValue('w') ||*/ "400"; 
+    var height = /* swfobject.getQueryParamValue('h') ||*/ "400"; 
+    var params = {'bgcolor': '#FFFFFF'};
+    var flashVars = { 
+        'time_step': swfobject.getQueryParamValue('time_step')
+       ,'show_time': swfobject.getQueryParamValue('show_time')
+       ,'nback'    : swfobject.getQueryParamValue('nback')
+        
+    };
+    swfobject.embedSWF("nback.swf", "flashcontent", width, height, "9.0.0"
+            , "static/expresssinstall.swf", flashVars, params, {});
+    
+    // ]]>
+</script>
+</body>
+</html>
