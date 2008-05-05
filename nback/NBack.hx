@@ -124,7 +124,7 @@ class NBack extends Sprite {
         hide_timer = new Timer(NBack.show_time, 1);
         hide_timer.addEventListener(TimerEvent.TIMER, clear_rect);
 
-        var _cleanup_timer = new Timer(NBack.time_step * 25 - 1);
+        var _cleanup_timer = new Timer(NBack.time_step * 250 + 1);
         _cleanup_timer.addEventListener(TimerEvent.TIMER, cleanup);
         _cleanup_timer.start();
         timer.start();
