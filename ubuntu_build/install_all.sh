@@ -1,11 +1,10 @@
-SRCDIR=/opt/src/
+SRCDIR=/usr/src/
 sudo apt-get update 
 sudo apt-get upgrade
 sudo apt-get install vim build-essential \
 gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
 lapack3-dev  libgd2-xpm-dev   \
 refblas3-dev tcl8.4-dev tk8.4-dev  \
-scalapack-lam-dev \
 atlas3-base-dev rlwrap \
 libatlas-cpp-0.6-dev \
 fftw3-dev libumfpack4-dev \
@@ -17,7 +16,9 @@ curl libcurl3-dev libtiff4-dev liblzo2-dev \
 php5-dev byacc libiconv-hook-dev flex recode \
 firefox libxbase2.0-dev python-setuptools libfreetype6-dev \
 subversion apache2-utils apache2-threaded-dev apache2 wget libreadline5-dev \
-byacc bison rsnapshot postgresql-contrib-8.2 postgresql-server-dev-8.2
+byacc bison rsnapshot postgresql-contrib-8.3 postgresql-server-dev-8.3 \
+postgresql-8.3-postgis
+
 
 sudo apt-get install libcurl4-dev
 sudo apt-get install blitz
@@ -146,3 +147,5 @@ svn co http://initd.org/svn/psycopg/psycopg2/trunk/
 
 sudo easy_install-2.5 -UZ cython  # the sage version of pyrex with enhancements
 sudo easy_install-2.5 -UZ http://superb-west.dl.sourceforge.net/sourceforge/mysql-python/MySQL-python-1.2.2.tar.gz
+
+
