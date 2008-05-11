@@ -148,4 +148,6 @@ svn co http://initd.org/svn/psycopg/psycopg2/trunk/
 sudo easy_install-2.5 -UZ cython  # the sage version of pyrex with enhancements
 sudo easy_install-2.5 -UZ http://superb-west.dl.sourceforge.net/sourceforge/mysql-python/MySQL-python-1.2.2.tar.gz
 
-
+# trac
+sudo apt-get install python-clearsilver clearsilver-dev
+sudo easy_install-2.5 Trac=0.11 #rc1
