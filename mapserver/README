@@ -1,0 +1,12 @@
+a python wsgi web script that copies the functionality of the mapserv
+executable for WMS requests. 
+currently only for WMS getMap requests.
+
+under those constraints, it is a drop-in replacement for mapserv.
+if python image library is installed adding buffer=true to the request url will cause the script 
+to buffer teh image, eliminating edge effects of labels, or chopped
+images.
+
+
+TODO:
+support getFeatureInfo
