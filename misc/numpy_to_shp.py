@@ -160,7 +160,6 @@ def numpy_to_shape(x, y, z, shpname=None, x0=0, y0=0, theta=None, connect=False,
         for seg in segments:
             if hasattr(seg, "vertices"):
                 seg = seg.vertices
-            print >>sys.stderr, dir(seg)
             if theta is not None: seg = rotate(seg, theta)
             # make it into a ring
             if not i:
