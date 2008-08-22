@@ -38,6 +38,11 @@ cd Imaging-1*
 # edit setup.py and set TCL_ROOT = "/usr/include/tcl8.3"
 sudo easy_install -UZ http://www.parallelpython.com/downloads/pp/pp-1.5.tar.gz
 
+# git manpages (i always forget how to do this)
+# wget "http://kernel.org/pub/software/scm/git/git-manpages-$GIT_VERSION.tar.bz2"
+# sudo tar xjv -C /usr/local/share/man        -f "git-manpages-$GIT_VERSION.tar.bz2"
+ 
+
 mkdir ${SRCDIR}/
 cd ${SRCDIR}/
 wget http://modwsgi.googlecode.com/files/mod_wsgi-2.0.tar.gz
