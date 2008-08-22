@@ -1,14 +1,15 @@
 SRCDIR=/usr/src/
 sudo apt-get update 
 sudo apt-get upgrade
-sudo apt-get install vim build-essential \
+sudo apt-get  -y install vim build-essential \
 gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
 lapack3-dev  libgd2-xpm-dev   \
-refblas3-dev tcl8.4-dev tk8.4-dev  \
-atlas3-base-dev rlwrap \
+refblas3-dev tcl8.4-dev tk8.4-dev tk8.3-dev 
+
+sudo apt-get -y install libblas-dev rlwrap \
 libatlas-cpp-0.6-dev \
 fftw3-dev libumfpack4-dev \
-swig sqlite3 cvs libmysqlclient-dev \
+swig sqlite3 cvs libmysqlclient15-dev \
 libpng12-dev libpq-dev libgl1-mesa-dev libglu1-mesa-dev \
 libboost-dev openssh-server  ssh-askpass \
  proj imagemagick libagg-dev keychain \
@@ -20,9 +21,7 @@ byacc bison rsnapshot postgresql-contrib-8.3 postgresql-server-dev-8.3 \
 postgresql-8.3-postgis
 
 
-sudo apt-get install libcurl4-dev
-sudo apt-get install blitz
-sudo apt-get install h5utils
+sudo apt-get -y install libcurl4-dev h5utils
 
 sudo echo "<900913> +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs  <>" >> /usr/share/proj/epsg
 sudo echo "<54004> +proj=merc +lat_ts=0 +lon_0=0 +k=1.000000 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs <>" >> /usr/share/proj/epsg
@@ -33,7 +32,10 @@ sudo echo "<54004> +proj=merc +lat_ts=0 +lon_0=0 +k=1.000000 +x_0=0 +y_0=0 +ellp
 # try to move to 2.5
 wget http://peak.telecommunity.com/dist/ez_setup.py
 sudo python2.5 ez_setup.py
-sudo easy_install-2.5 -UZ http://effbot.org/downloads/Imaging-1.1.6.tar.gz
+cd /tmp/; wget http://effbot.org/downloads/Imaging-1.1.6.tar.gz
+tar xzvf Imaging-1.1.6.tar.gz
+cd Imaging-1*
+# edit setup.py and set TCL_ROOT = "/usr/include/tcl8.3"
 sudo easy_install -UZ http://www.parallelpython.com/downloads/pp/pp-1.5.tar.gz
 
 mkdir ${SRCDIR}/
