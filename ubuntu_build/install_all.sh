@@ -137,9 +137,8 @@ sudo rm -rf build
 swig -python -shadow -modern -templatereduce -fastdispatch -fvirtual -fastproxy -modernargs -castmode -dirvtable -fastinit -fastquery -noproxydel -nobuildnone -o mapscript_wrap.c ../mapscript.i
 sudo python setup.py install
 
-sudo easy_install -UZ numpy
-
-sudo easy_install matplotlib
+sudo easy_install -UZ numpy matplotlib ipython==dev cython
+sudo easy_install -UZ mako genshi sqlalchemy==dev simplejson
 
 cd ${SRCDIR}/
 svn co http://svn.scipy.org/svn/scipy/trunk scipysvn
@@ -147,12 +146,10 @@ cd scipysvn
 #echo "numexpr" > Lib/sandbox/enabled_packages.txt
 sudo python2.5 setup.py install
 
-sudo easy_install -UZ ipython==dev
 sudo easy_install-2.5 -UZ http://initd.org/svn/psycopg/psycopg2/trunk/
 
 svn co http://initd.org/svn/psycopg/psycopg2/trunk/
 
-sudo easy_install-2.5 -UZ cython  # the sage version of pyrex with enhancements
 sudo easy_install-2.5 -UZ http://superb-west.dl.sourceforge.net/sourceforge/mysql-python/MySQL-python-1.2.2.tar.gz
 
 # trac
