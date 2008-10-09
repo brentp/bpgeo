@@ -1,5 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
+from matplotlib import transforms as mtransforms
+
 
 sizes = [20, 40, 80]
 
@@ -7,6 +10,27 @@ MIN, MAX = 0.07, .996
 
 heights = [0.6, 0.4]
 widths  = [0.8, 0.2]
+
+class SLocator(LinearLocator):
+    def __call__(self):
+        'Return the locations of the ticks'
+
+        vmin, vmax = self.axis.get_data_interval()
+        vmin, vmax = mtransforms.nonsingular(vmin, vmax, expander = 0.05)
+
+        if vmax<vmin:
+            vmin, vmax = vmax, vmin
+        rng = vmax - vmin
+        vmax -= rng * 0.1
+        if vmin / rng < 0.2: vmin = 0
+
+        if self.numticks is None:
+            self.numticks = 4
+
+        if self.numticks==0: return []
+        ticklocs = np.linspace(vmin, vmax, self.numticks)
+
+        return ticklocs
 
 
 def to_axes_limits(limits):
@@ -45,6 +69,18 @@ def to_axes_limits(limits):
     # expects.
     return [(l[0], l[1] - l[0]) for l in limits]
 
+
+def get_nticks_for_size(size):
+    if size < 0.1:
+        return 2
+    if size < 0.3:
+        return 4
+    if size < 0.6:
+        return 6
+    return 8
+
+
+
 widths  = to_axes_limits(widths)
 heights = to_axes_limits(heights)
 
@@ -52,9 +88,9 @@ fig = plt.figure(figsize=(10, 10), dpi=72)
 
 print widths, heights
 
-a = np.arange(3)
-b = np.arange(3, 6)
-c = np.arange(6, 9)
+a = np.arange(0, 30, 3)
+b = np.arange(30, 60, 3)
+c = np.arange(60, 90, 3)
 
 import random
 for i, h in enumerate(heights):
@@ -65,12 +101,15 @@ for i, h in enumerate(heights):
         ax.set_xlim(ymin=0)
         if j == 0:
             ax.set_ylabel('Y')
+            ax.yaxis.set_major_locator(SLocator(numticks=get_nticks_for_size(h[1])))
+            ax.yaxis.set_major_formatter(FormatStrFormatter('%.0f'))
         else:
             ax.set_yticks([])
 
         if i == 0:
             ax.set_xlabel('X')
-            print dir(ax.get_frame())
+            ax.xaxis.set_major_locator(SLocator(numticks=get_nticks_for_size(w[1])))
+            ax.xaxis.set_major_formatter(FormatStrFormatter('%.0f'))
         else:
             ax.set_xticks([])
 
