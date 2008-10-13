@@ -76,6 +76,32 @@ def get_nticks_for_size(size):
         return 6
     return 8
 
+def plot_subplot(xs, ys, width, height, sizes=None, colors=None, fig=None, **kwargs):
+    """width, height contains the start and stop in 0 <= w,h <= 1
+    coordinates:
+        >>> plot_subplot((0,1), (0, 1), fig=f)
+    will plot over teh entire interval. this is usually handled by the
+    main dotplot() call.
+    """
+    kwargs = {}
+    xs, ys = np.array(xs), np.array(ys)
+    if sizes: kwargs['s'] = sizes
+    if colors: kwargs['c'] = colors
+    ax = fig.add_axes([width[0], height[0], width[1], height[1]])
+    ax.scatter(xs, ys, **kwargs)
+
+    xmin, ymin = float(xs.min()), float(ys.min())
+    rangex = xs.max() - xmin
+    rangey = ys.max() - ymin
+
+    # if it's close to zero. set it there. otherwise, give it a little range.
+    if kwargs.get('set_lim'):
+        ax.set_xlim(xmin=0 if xmin / rangex < 0.2 else xmin - rangex * 0.04 )
+        ax.set_ylim(ymin=0 if ymin / rangey < 0.2 else ymin - rangey * 0.04 )
+
+    return ax
+
+
 
 def _example():
 
@@ -101,13 +127,13 @@ def _example():
     for i, h in enumerate(heights):
         for j, w in enumerate(widths):
 
-            sizes  = [random.randint(1, 100) for i in xrange(a.shape[0])]
-            colors = [random.choice(RGB) for i in xrange(a.shape[0])]
+            sizes  = [random.randint(1, 100) for r in xrange(a.shape[0])]
+            colors = [random.choice(RGB) for r in xrange(a.shape[0])]
 
-            ax = fig.add_axes([w[0], h[0], w[1], h[1]])
-            ax.scatter(a, b, s=sizes, c=colors)
-            ax.set_xlim(xmin=0)
-            ax.set_xlim(ymin=0)
+            xs = random.choice([a, b, c])
+            ys = random.choice([a, b, c])
+
+            ax = plot_subplot(xs, ys, w, h, sizes, colors, fig)
 
             if j == 0:
                 ax.set_ylabel('Y')
