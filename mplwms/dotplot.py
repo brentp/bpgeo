@@ -4,12 +4,9 @@ from matplotlib.ticker import LinearLocator, FormatStrFormatter
 from matplotlib import transforms as mtransforms
 
 
-sizes = [20, 40, 80]
 
 MIN, MAX = 0.07, .996
 
-heights = [0.6, 0.4]
-widths  = [0.8, 0.2]
 
 class SLocator(LinearLocator):
     def __call__(self):
@@ -80,41 +77,59 @@ def get_nticks_for_size(size):
     return 8
 
 
+def _example():
 
-widths  = to_axes_limits(widths)
-heights = to_axes_limits(heights)
+    heights = [0.6, 0.4]
+    widths  = [0.8, 0.2]
 
-fig = plt.figure(figsize=(10, 10), dpi=72)
+    widths  = to_axes_limits(widths)
+    heights = to_axes_limits(heights)
 
-print widths, heights
+    fig = plt.figure(figsize=(10, 10), dpi=72)
 
-a = np.arange(0, 30, 3)
-b = np.arange(30, 60, 3)
-c = np.arange(60, 90, 3)
+    print widths, heights
 
-import random
-for i, h in enumerate(heights):
-    for j, w in enumerate(widths):
-        ax = fig.add_axes([w[0], h[0], w[1], h[1]])
-        ax.scatter(a, b, s=sizes, facecolor=random.choice(['blue', 'green', 'red']))
-        ax.set_xlim(xmin=0)
-        ax.set_xlim(ymin=0)
-        if j == 0:
-            ax.set_ylabel('Y')
-            ax.yaxis.set_major_locator(SLocator(numticks=get_nticks_for_size(h[1])))
-            ax.yaxis.set_major_formatter(FormatStrFormatter('%.0f'))
-        else:
-            ax.set_yticks([])
+    a = np.arange(0, 30, 3)
+    b = np.arange(30, 60, 3)
+    c = np.arange(60, 90, 3)
 
-        if i == 0:
-            ax.set_xlabel('X')
-            ax.xaxis.set_major_locator(SLocator(numticks=get_nticks_for_size(w[1])))
-            ax.xaxis.set_major_formatter(FormatStrFormatter('%.0f'))
-        else:
-            ax.set_xticks([])
+    print a.shape
+    import random
 
-        ax.frame.set_edgecolor('#2222ff')
+    RGB = (1, 0, 0), (0, 1, 0), (0, 0, 1)
+
+    for i, h in enumerate(heights):
+        for j, w in enumerate(widths):
+
+            sizes  = [random.randint(1, 100) for i in xrange(a.shape[0])]
+            colors = [random.choice(RGB) for i in xrange(a.shape[0])]
+
+            ax = fig.add_axes([w[0], h[0], w[1], h[1]])
+            ax.scatter(a, b, s=sizes, c=colors)
+            ax.set_xlim(xmin=0)
+            ax.set_xlim(ymin=0)
+
+            if j == 0:
+                ax.set_ylabel('Y')
+                ax.yaxis.set_major_locator(SLocator(numticks=get_nticks_for_size(h[1])))
+                ax.yaxis.set_major_formatter(FormatStrFormatter('%.0f'))
+            else:
+                ax.set_yticks([])
+
+            if i == 0:
+                ax.set_xlabel('X')
+                ax.xaxis.set_major_locator(SLocator(numticks=get_nticks_for_size(w[1])))
+                ax.xaxis.set_major_formatter(FormatStrFormatter('%.0f'))
+            else:
+                ax.set_xticks([])
+
+            ax.frame.set_edgecolor('#2222ff')
 
 
-plt.show()
+    plt.show()
 
+
+
+if __name__ == "__main__":
+
+    _example()
