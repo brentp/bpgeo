@@ -6,6 +6,9 @@ gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
 liblapack-dev  libgd2-xpm-dev   \
 libblas-dev tcl8.4-dev tk8.4-dev tk8.3-dev 
 
+# set vim as default
+sudo update-alternatives --config editor
+
 sudo apt-get -y install libblas-dev rlwrap \
 libatlas-cpp-0.6-dev \
 libfftw3-dev  libsuitesparse-dev \
