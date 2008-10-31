@@ -3,12 +3,12 @@ sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get  -y install vim build-essential \
 gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
-lapack3-dev  libgd2-xpm-dev   \
-refblas3-dev tcl8.4-dev tk8.4-dev tk8.3-dev 
+liblapack-dev  libgd2-xpm-dev   \
+libblas-dev tcl8.4-dev tk8.4-dev tk8.3-dev 
 
 sudo apt-get -y install libblas-dev rlwrap \
 libatlas-cpp-0.6-dev \
-fftw3-dev libumfpack4-dev \
+libfftw3-dev  libsuitesparse-dev \
 swig sqlite3 cvs libmysqlclient15-dev \
 libpng12-dev libpq-dev libgl1-mesa-dev libglu1-mesa-dev \
 libboost-dev openssh-server  ssh-askpass \
@@ -45,9 +45,9 @@ sudo easy_install -UZ http://www.parallelpython.com/downloads/pp/pp-1.5.tar.gz
 
 mkdir ${SRCDIR}/
 cd ${SRCDIR}/
-wget http://modwsgi.googlecode.com/files/mod_wsgi-2.0.tar.gz
-tar xzvf mod_wsgi-2.0.tar.gz
-cd mod_wsgi-2.0
+wget http://modwsgi.googlecode.com/files/mod_wsgi-2.3.tar.gz
+tar xzvf mod_wsgi-2.3.tar.gz
+cd mod_wsgi-2.3
 ./configure
 make -j4
 sudo make install
@@ -58,10 +58,10 @@ sudo make install
 cd ${SRCDIR}
 mkdir geos
 cd geos
-wget http://geos.refractions.net/downloads/geos-3.0.0.tar.bz2
-bunzip2 geos-3.0.0.tar.bz2
-tar xvf geos-3.0.0.tar
-cd geos-3.0.0
+GV=3.0.2 wget http://download.osgeo.org/geos/geos-${GV}.tar.bz2
+bunzip2 geos-${GV}.tar.bz2
+tar xvf geos-${GV}.tar
+cd geos-${GV}
 ./configure;make -j4; 
 sudo make install
 
@@ -146,9 +146,8 @@ cd scipysvn
 #echo "numexpr" > Lib/sandbox/enabled_packages.txt
 sudo python2.5 setup.py install
 
-sudo easy_install-2.5 -UZ http://initd.org/svn/psycopg/psycopg2/trunk/
+sudo easy_install -UZ http://www.initd.org/pub/software/psycopg/PSYCOPG-2-0/psycopg2-2.0.7.tar.gz
 
-svn co http://initd.org/svn/psycopg/psycopg2/trunk/
 
 sudo easy_install-2.5 -UZ http://superb-west.dl.sourceforge.net/sourceforge/mysql-python/MySQL-python-1.2.2.tar.gz
 
