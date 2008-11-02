@@ -4,7 +4,7 @@ sudo apt-get upgrade
 sudo apt-get  -y install vim build-essential \
 gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
 liblapack-dev  libgd2-xpm-dev   \
-libblas-dev tcl8.4-dev tk8.4-dev tk8.3-dev 
+libblas-dev tcl8.4-dev tk8.4-dev tk8.3-dev libsvn-perl
 
 # set vim as default
 sudo update-alternatives --config editor
