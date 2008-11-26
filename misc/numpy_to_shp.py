@@ -4,7 +4,7 @@ import os
 os.environ['HOME'] = '/tmp/'
 import matplotlib
 matplotlib.use('Agg')
-from pylab import contour, savefig
+from matplotlib.pyplot import contour
 import numpy
 import cPickle
 try:
