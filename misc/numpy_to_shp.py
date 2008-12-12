@@ -89,6 +89,9 @@ def numpy_to_arrow_shape(x, y, z, shpname=None, epsg=None, group='', levels=None
         layer.CreateFeature(f)
         f.Destroy()
 
+    if epsg:
+        write_prj(epsg, shpname[:-4] + ".prj")
+
     data_source.Destroy()
 
     return shpname
@@ -185,14 +188,16 @@ def numpy_to_shape(x, y, z, shpname=None, x0=0, y0=0, theta=None, connect=False,
 
     # write the projection file. as ogr wont do it for us.
     if epsg:
-        proj = ogr.osr.SpatialReference()
-        proj.ImportFromEPSG(epsg)
-        proj_file = open(shpname[:-4] + ".prj", 'w')
-        proj_file.write(proj.ExportToWkt())
-        proj_file.close()
+        write_prj(epsg, shpname[:-4] + ".prj")
 
     return shpname, center
 
+def write_prj(epsg, prj_path):
+    proj = ogr.osr.SpatialReference()
+    proj.ImportFromEPSG(epsg)
+    proj_file = open(prj_path, 'w')
+    proj_file.write(proj.ExportToWkt())
+    proj_file.close()
 
 if __name__ == "__main__":
     fh = open('/tmp/zz.pickle','rb')
