@@ -162,7 +162,7 @@ cd scipysvn
 sudo python2.5 setup.py install
 
 svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/matplotlib matplotlib-svn
-cd matplitlib-svn
+cd matplotlib-svn
 sudo python2.5 setup.py install
 
 sudo easy_install -UZ http://www.initd.org/pub/software/psycopg/PSYCOPG-2-0/psycopg2-2.0.9.tar.gz
