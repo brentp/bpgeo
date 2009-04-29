@@ -19,10 +19,10 @@ swig sqlite3 cvs libmysqlclient15-dev \
 libpng12-dev libpq-dev libgl1-mesa-dev libglu1-mesa-dev \
 libboost-dev openssh-server  ssh-askpass \
  proj imagemagick libagg-dev keychain \
-curl  libtiff4-dev liblzo2-dev \
+curl libcurl4-dev  libtiff4-dev liblzo2-dev \
 byacc libiconv-hook-dev flex recode \
 firefox libxbase2.0-dev python-setuptools libfreetype6-dev \
-subversion apache2-mpm-worker \
+subversion apache2-dev apache2-mpm-worker \
 byacc bison rsnapshot postgresql-contrib-8.3 postgresql-server-dev-8.3 \
 postgresql-8.3-postgis h5utils
 #libcurl4-dev
@@ -150,7 +150,7 @@ sudo rm -rf build
 swig -python -shadow -modern -templatereduce -fastdispatch -fvirtual -fastproxy -modernargs -castmode -dirvtable -fastinit -fastquery -noproxydel -nobuildnone -o mapscript_wrap.c ../mapscript.i
 sudo python setup.py install
 
-sudo easy_install -UZ ipython==dev cython
+sudo easy_install -UZ ipython==dev cython virtualenvwrapper
 sudo easy_install -UZ mako genshi sqlalchemy==dev simplejson
 
 cd ${SRCDIR}/
