@@ -82,7 +82,7 @@ cd ${SRCDIR}/gdal
 svn checkout https://svn.osgeo.org/gdal/trunk/gdal gdalsvn
 cd gdalsvn
 # make sure to build with internal to support bigtiff.
-./configure --with-libtiff=internal
+./configure --with-libtiff=internal --with-python
 make -j4
 sudo make install
 
