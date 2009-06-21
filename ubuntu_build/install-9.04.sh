@@ -1,8 +1,9 @@
 SRCDIR=/opt/src/
+PYTHON=python2.6
 sudo apt-get update 
 sudo apt-get upgrade
 sudo apt-get  -y install vim build-essential \
-vim-full gfortran python2.5-dev python-tk python-gtk2-dev libwxgtk2.6-dev \
+vim-full gfortran python-tk python-gtk2-dev libwxgtk2.6-dev \
 liblapack-dev  libgd2-xpm-dev   \
 libblas-dev tcl8.4-dev tk8.4-dev tk8.3-dev libsvn-perl
 
@@ -40,7 +41,7 @@ sudo echo "<54004> +proj=merc +lat_ts=0 +lon_0=0 +k=1.000000 +x_0=0 +y_0=0 +ellp
 # sudo apt-get install sun-java6-jdk libmysql-java libpg-java
 
 wget http://peak.telecommunity.com/dist/ez_setup.py
-sudo python2.5 ez_setup.py
+sudo $PYTHON ez_setup.py
 cd /tmp/; wget http://effbot.org/downloads/Imaging-1.1.7.tar.gz
 tar xzvf Imaging-1.1.7.tar.gz
 cd Imaging-1*
@@ -53,9 +54,9 @@ cd Imaging-1*
 
 mkdir ${SRCDIR}/
 cd ${SRCDIR}/
-wget http://modwsgi.googlecode.com/files/mod_wsgi-2.4.tar.gz
-tar xzvf mod_wsgi-2.4.tar.gz
-cd mod_wsgi-2.4
+wget http://modwsgi.googlecode.com/files/mod_wsgi-2.5.tar.gz
+tar xzvf mod_wsgi-2.5.tar.gz
+cd mod_wsgi-2.5
 ./configure
 make -j4
 sudo make install
@@ -66,7 +67,7 @@ sudo make install
 cd ${SRCDIR}
 mkdir geos
 cd geos
-GV=3.1.0 
+GV=3.1.1 
 wget http://download.osgeo.org/geos/geos-${GV}.tar.bz2
 bunzip2 geos-${GV}.tar.bz2
 tar xvf geos-${GV}.tar
