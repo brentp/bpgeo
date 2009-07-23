@@ -9,6 +9,8 @@ cd $SRCDIR
 
 # virtualenv
 sudo easy_install -UZ virtualenvwrapper virtualenv
-mkdir ~/.virtualenvs
+mkdir ~/.virtualenvs 
 # add 'source /usr/local/bin/virtualenvwrapper_bashrc' to ~/.bashrc
 
+
+sudo easy_install -UZ mako genshi sqlalchemy paste nose

@@ -25,7 +25,7 @@ byacc libiconv-hook-dev flex recode \
 firefox libxbase2.0-dev python-setuptools libfreetype6-dev \
 subversion apache2-dev apache2-mpm-worker \
 byacc bison rsnapshot postgresql-contrib-8.3 postgresql-server-dev-8.3 \
-postgresql-8.3-postgis h5utils
+postgresql-8.3-postgis h5utils libxslt-dev libpam-dev libreadline-dev
 #libcurl4-dev
 
 
