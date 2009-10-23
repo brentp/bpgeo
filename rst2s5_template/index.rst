@@ -32,5 +32,14 @@ Example Code (bash)
         --theme-url=ui/small-black \
         ${NAME}.rst > ${NAME}.html
 
-.. footer:: 2009/11/05
+Source
+------
+
+get the code from:
+
+.. sourcecode:: bash
+
+    svn checkout http://bpgeo.googlecode.com/svn/trunk/rst2s5_template/
+
+.. footer:: svn checkout http://bpgeo.googlecode.com/svn/trunk/rst2s5_template/
 
