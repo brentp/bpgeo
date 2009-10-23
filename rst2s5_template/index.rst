@@ -18,7 +18,8 @@ Example Code (python)
     >>> for i in range(1000):
     ...    r.add(i, (i, i, i + 2, i + 2))
 
-    >>> r.intersection((0, 1, 0, 1))
+    >>> r.intersection((0, 0, 2, 2))
+    [0L, 1L, 2L]
 
 
 Example Code (bash) 
